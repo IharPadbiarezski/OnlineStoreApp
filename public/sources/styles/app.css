@@ -56,3 +56,10 @@
 	font-size:20px;
 	vertical-align:middle;
 }
+.toolbar__bg {
+    background: #3B93E7;
+}
+.webix_toolbar .toolbar__element .webix_el_box, .webix_toolbar .toolbar__element .webix_button {
+    color: #fff;
+}
+

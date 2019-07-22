@@ -1,41 +1,64 @@
-import {JetView, plugins} from "webix-jet";
+import {JetView} from "webix-jet";
+import {phoneModels} from "../models/phoneModels.js";
 
 export default class TopView extends JetView {
 	config() {
-		let header = {
-			type: "header", template: this.app.config.name, css: "webix_header app_header"
-		};
-
-		let menu = {
-			view: "menu",
-			id: "top:menu",
-			css: "app_menu",
-			width: 180,
-			layout: "y",
-			select: true,
-			template: "<span class='webix_icon #icon#'></span> #value# ",
-			data: [
-				{value: "Dashboard", id: "start", icon: "wxi-columns"},
-				{value: "Data", id: "data", icon: "wxi-pencil"}
+		const toolBar = {
+			view: "toolbar",
+			height: 56,
+			css: "toolbar__bg",
+			elements: [
+				{view: "label", label: "Varin Shop", css: "toolbar__element"},
+				{},
+				{view: "label", label: "Hi, varias!", css: "toolbar__element"},
+				{},
+				{
+					cols: [
+						{
+							view: "button",
+							css: "webix_transparent toolbar__element",
+							label: "Logout"
+						},
+						{
+							view: "button",
+							css: "webix_transparent toolbar__element",
+							label: "History"
+						},
+						{
+							view: "button",
+							css: "webix_transparent toolbar__element",
+							label: "Bag"
+						}
+					]
+				}
 			]
 		};
 
-		let ui = {
+		const ui = {
 			type: "clean",
 			paddingX: 5,
 			css: "app_layout",
-			cols: [
+			rows: [
+				toolBar,
 				{
-					paddingX: 5,
-					paddingY: 10,
-					rows: [{css: "webix_shadow_medium", rows: [header, menu]}]
-				},
-				{
-					type: "wide",
-					paddingY: 10,
-					paddingX: 5,
-					rows: [
-						{$subview: true}
+					cols: [
+						{
+							view: "tree",
+							localId: "tree",
+							width: 220,
+							select: true,
+							on: {
+								onAfterSelect: (id) => {
+									console.log(id);
+								}
+							}
+						},
+						{
+							type: "wide",
+							rows: [
+								{$subview: true}
+							]
+						}
 					]
 				}
 			]
@@ -45,6 +68,8 @@ export default class TopView extends JetView {
 	}
 
 	init() {
-		this.use(plugins.Menu, "top:menu");
+		phoneModels.waitData.then(() => {
+			this.$$("tree").sync(phoneModels);
+		});
 	}
 }
