@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
-import {phoneModels} from "../models/phoneModels.js";
+import {phoneModels} from "../models/phoneModels";
+import PhonesTable from "./phonesTable";
 
 export default class TopView extends JetView {
 	config() {
@@ -56,7 +57,7 @@ export default class TopView extends JetView {
 						{
 							type: "wide",
 							rows: [
-								{$subview: true}
+								{$subview: PhonesTable}
 							]
 						}
 					]
