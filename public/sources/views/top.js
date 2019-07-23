@@ -86,13 +86,13 @@ export default class TopView extends JetView {
 			this.$$("tree").sync(phoneModels);
 		});
 
-		const phonesAmount = Storage.getPhonesFromStorage().length;
-		
-
 		this.on(this.app, "bag:setvalue", (value) => {
 			this.$$("bag").setValue(`Bag(${value})`);
 		});
 
-		this.app.callEvent("bag:setvalue", [phonesAmount]);
+		const phonesAmount = Storage.getPhonesFromStorage().length;
+		if (phonesAmount !== 0) {
+			this.app.callEvent("bag:setvalue", [phonesAmount]);
+		}
 	}
 }
