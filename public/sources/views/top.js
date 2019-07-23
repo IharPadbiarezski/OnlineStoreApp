@@ -2,6 +2,7 @@ import {JetView} from "webix-jet";
 import {phoneModels} from "../models/phoneModels";
 import PhonesTable from "./phonesTable";
 import {phones} from "../models/phones";
+import Storage from "./localStorage/localStorage";
 
 export default class TopView extends JetView {
 	config() {
@@ -28,8 +29,12 @@ export default class TopView extends JetView {
 						},
 						{
 							view: "button",
+							localId: "bag",
 							css: "webix_transparent toolbar__element",
-							label: "Bag"
+							value: "Bag",
+							onClick: () => {
+								console.log("hi")
+							}
 						}
 					]
 				}
@@ -80,5 +85,14 @@ export default class TopView extends JetView {
 		phoneModels.waitData.then(() => {
 			this.$$("tree").sync(phoneModels);
 		});
+
+		const phonesAmount = Storage.getPhonesFromStorage().length;
+		
+
+		this.on(this.app, "bag:setvalue", (value) => {
+			this.$$("bag").setValue(`Bag(${value})`);
+		});
+
+		this.app.callEvent("bag:setvalue", [phonesAmount]);
 	}
 }

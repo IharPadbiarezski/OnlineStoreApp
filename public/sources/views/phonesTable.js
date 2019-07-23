@@ -83,6 +83,7 @@ export default class PhonesTable extends JetView {
 					localStorage.setItem("phones", JSON.stringify(phonesLS));
 					Storage.saveIntoStorage(phone);
 					webix.message(`${phone.name} has been added to your bag`);
+					this.app.callEvent("bag:setvalue", [phonesLS.length + 1]);
 				}
 			}
 		};
