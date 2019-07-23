@@ -48,6 +48,7 @@ export default class TopView extends JetView {
 							localId: "tree",
 							width: 220,
 							select: true,
+							css: "phones__tree",
 							on: {
 								onAfterSelect: (id) => {
 									console.log(id);

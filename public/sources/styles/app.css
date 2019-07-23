@@ -62,4 +62,29 @@
 .webix_toolbar .toolbar__element .webix_el_box, .webix_toolbar .toolbar__element .webix_button {
     color: #fff;
 }
-
+.shoppingCart {
+    font-size: 40px;
+}
+.phone__image {
+    margin-top: 5px;
+    width: 50px;
+    height: 50px;
+}
+.phones__tree .webix_tree_item.webix_selected {
+    background: transparent;
+}
+.phones__tree .webix_tree_item.webix_selected span {
+    background-color: transparent;
+    padding: 0 5px;
+    color: white;
+    background: green;
+}
+.phones__tree .webix_tree_open, .phones__tree .webix_tree_close {
+    font-size: 15px;
+}
+.phones__tree .webix_tree_open:before {
+    content: "\F026";
+}
+.phones__tree .webix_tree_close:before {
+    content: "\F025";
+}

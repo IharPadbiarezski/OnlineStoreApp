@@ -6,11 +6,12 @@ export default class PhonesTable extends JetView {
 		return {
 			view: "datatable",
 			scroll: "y",
+			rowHeight: 60,
 			columns: [
 				{
 					id: "image",
 					header: "Image",
-					template: obj => `<img scr=${obj.image} />`
+					template: obj => `<img class="phone__image" src=${obj.image} />`
 				},
 				{
 					id: "name",
@@ -27,15 +28,21 @@ export default class PhonesTable extends JetView {
 				},
 				{
 					id: "amount",
-					header: "Amount"
+					header: "Amount",
+					template: "{common.count()}"
+				},
+				{
+					id: "Buy",
+					template: "<span class='useremail mdi mdi-cart-outline shoppingCart'></span>",
+					width: 60
 				}
-			]
-			// onClick: {
-			// 	"wxi-pencil": (e, id) => {
-			// 		const item = this.getRoot().getItem(id);
-			// 		this.form.showForm(item);
-			// 	}
-			// }
+
+			],
+			onClick: {
+				shoppingCart: (e, id) => {
+					console.log(`Here I am. id is ${id}`);
+				}
+			}
 		};
 	}
 
