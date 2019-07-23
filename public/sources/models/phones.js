@@ -8,7 +8,7 @@ export const phones = new webix.DataCollection({
 			rating: 125
 		},
 		{
-			id: 2,
+			id: 22,
 			image: "https://content2.onliner.by/catalog/device/header@2/c0b0d4f863116349ed471d81968480a7.jpeg",
 			name: "Samsung Galaxy S3",
 			price: 340,

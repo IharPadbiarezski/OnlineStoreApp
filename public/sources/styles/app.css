@@ -91,3 +91,30 @@
 .phones__counter {
     padding: 10px 0;
 }
+.photo_info_close__btn .webix_button, .photo_info_close__btn .webix_button:hover {
+    background: transparent;
+}
+.phone-info-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 60px;
+    user-select: none;
+}
+.phone-photo {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+.info {
+    margin-left: 20px;
+}
+.phone-info__name, .phone-info__price, .phone-info__rating {
+    font-weight: bold;
+}
+.phone-info__star-icon {
+    font-size: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}

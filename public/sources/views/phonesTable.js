@@ -1,4 +1,5 @@
 import {JetView} from "webix-jet";
+import PhoneInfoWindow from "./windows/phoneInfo";
 import {phones} from "../models/phones";
 
 export default class PhonesTable extends JetView {
@@ -18,7 +19,7 @@ export default class PhonesTable extends JetView {
 					css: "phones__counter",
 					on: {
 						onChange: (newVal, oldVal) => {
-							console.log(newVal)
+							console.log(newVal);
 						}
 					}
 				}
@@ -55,6 +56,13 @@ export default class PhonesTable extends JetView {
 				}
 
 			],
+			on: {
+				onItemDblClick: (id, e, node) => {
+					// console.log(id, e, node);
+					const values = this.getRoot().getItem(id);
+					this.phoneInfo.showWindow(values);
+				}
+			},
 			onClick: {
 				shoppingCart: (e, id) => {
 					console.log(`Here I am. id is ${id}`);
@@ -66,6 +74,7 @@ export default class PhonesTable extends JetView {
 	init(view) {
 		phones.waitData.then(() => {
 			view.sync(phones);
+			this.phoneInfo = this.ui(PhoneInfoWindow);
 		});
 	}
 }
