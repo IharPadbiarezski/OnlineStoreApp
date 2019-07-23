@@ -3,10 +3,26 @@ import {phones} from "../models/phones";
 
 export default class PhonesTable extends JetView {
 	config() {
+		webix.protoUI({
+			name: "phonesTable"
+		}, webix.ui.datatable, webix.ActiveContent);
+
 		return {
-			view: "datatable",
+			view: "phonesTable",
 			scroll: "y",
 			rowHeight: 60,
+			activeContent: {
+				counter: {
+					view: "counter",
+					width: 120,
+					css: "phones__counter",
+					on: {
+						onChange: (newVal, oldVal) => {
+							console.log(newVal)
+						}
+					}
+				}
+			},
 			columns: [
 				{
 					id: "image",
@@ -29,7 +45,8 @@ export default class PhonesTable extends JetView {
 				{
 					id: "amount",
 					header: "Amount",
-					template: "{common.count()}"
+					width: 120,
+					template: "{common.counter()}"
 				},
 				{
 					id: "Buy",

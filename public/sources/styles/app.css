@@ -88,3 +88,6 @@
 .phones__tree .webix_tree_close:before {
     content: "\F025";
 }
+.phones__counter {
+    padding: 10px 0;
+}
