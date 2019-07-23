@@ -118,3 +118,24 @@
     margin-left: 20px;
     cursor: pointer;
 }
+.bag__delete-icon {
+    font-size: 20px;
+}
+.make-order__button.webix_secondary .webix_button {
+    background: #3B93E7;
+    color: #FFFFFF;
+}
+.make-order__button.webix_secondary .webix_button:hover {
+    background: #378bda;
+    color: #FFFFFF;
+}
+
+.make-order__button.webix_secondary .webix_button:active {
+    background-color: #378bda;
+}
+.total__template .webix_view {
+    background: #FAFAFA;
+}
+.total__template .webix_template {
+    line-height: 50px;
+}

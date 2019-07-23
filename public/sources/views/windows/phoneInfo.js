@@ -44,10 +44,10 @@ export default class PhoneInfoWindow extends JetView {
             `,
 			onClick: {
 				starIcon: () => {
-                    const id = this.phoneValues.id;
+					const id = this.phoneValues.id;
 					this.phoneValues.rating++;
-                    phones.updateItem(id, this.phoneValues);
-                    this.$$("template").refresh();
+					phones.updateItem(id, this.phoneValues);
+					this.$$("template").refresh();
 				}
 			}
 		};

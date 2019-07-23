@@ -1,6 +1,5 @@
 import {JetView} from "webix-jet";
 import {phoneModels} from "../models/phoneModels";
-import PhonesTable from "./phonesTable";
 import {phones} from "../models/phones";
 import Storage from "./localStorage/localStorage";
 
@@ -32,8 +31,8 @@ export default class TopView extends JetView {
 							localId: "bag",
 							css: "webix_transparent toolbar__element",
 							value: "Bag",
-							onClick: () => {
-								console.log("hi")
+							click: () => {
+								this.show("bag");
 							}
 						}
 					]
@@ -57,6 +56,7 @@ export default class TopView extends JetView {
 							css: "phones__tree",
 							on: {
 								onAfterSelect: (id) => {
+									this.show("store");
 									const phoneName = this.$$("tree").getItem(id).value.toLowerCase();
 									if (phoneName !== "phones") {
 										phones.data.filter(item => item.name.toLowerCase().includes(phoneName));
@@ -70,7 +70,7 @@ export default class TopView extends JetView {
 						{
 							type: "wide",
 							rows: [
-								{$subview: PhonesTable}
+								{$subview: true}
 							]
 						}
 					]
@@ -82,6 +82,7 @@ export default class TopView extends JetView {
 	}
 
 	init() {
+
 		phoneModels.waitData.then(() => {
 			this.$$("tree").sync(phoneModels);
 		});
