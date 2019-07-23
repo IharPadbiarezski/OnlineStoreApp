@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import PhoneInfoWindow from "./windows/phoneInfo";
 import {phones} from "../models/phones";
+import Storage from "./localStorage/localStorage";
 
 export default class PhonesTable extends JetView {
 	config() {
@@ -16,11 +17,16 @@ export default class PhonesTable extends JetView {
 				counter: {
 					view: "counter",
 					width: 120,
+					localId: "counter",
 					css: "phones__counter",
 					on: {
 						onChange: (newVal, oldVal) => {
-							console.log(newVal);
+							// console.log(newVal);
+							// console.log(val)
 						}
+					},
+					onClick: (e, id) => {
+						console.log("hi");
 					}
 				}
 			},
@@ -64,14 +70,26 @@ export default class PhonesTable extends JetView {
 				}
 			},
 			onClick: {
-				shoppingCart: (e, id) => {
-					console.log(`Here I am. id is ${id}`);
+				shoppingCart: (e, id, node) => {
+					console.log(id, e, node);
+
+					const phone = this.getRoot().getItem(id);
+					const phonesLS = Storage.getPhonesFromStorage();
+					phonesLS.forEach((phoneLS, index) => {
+						if (+phoneLS.id === +id) {
+							phonesLS.splice(index, 1);
+						}
+					});
+					localStorage.setItem("phones", JSON.stringify(phonesLS));
+					Storage.saveIntoStorage(phone);
+					webix.message(`${phone.name} has been added to your bag`);
 				}
 			}
 		};
 	}
 
 	init(view) {
+		this.bag = [];
 		phones.waitData.then(() => {
 			view.sync(phones);
 			this.phoneInfo = this.ui(PhoneInfoWindow);
