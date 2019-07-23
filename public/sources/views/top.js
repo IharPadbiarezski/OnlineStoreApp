@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import {phoneModels} from "../models/phoneModels";
 import PhonesTable from "./phonesTable";
+import {phones} from "../models/phones";
 
 export default class TopView extends JetView {
 	config() {
@@ -51,7 +52,13 @@ export default class TopView extends JetView {
 							css: "phones__tree",
 							on: {
 								onAfterSelect: (id) => {
-									console.log(id);
+									const phoneName = this.$$("tree").getItem(id).value.toLowerCase();
+									if (phoneName !== "phones") {
+										phones.data.filter(item => item.name.toLowerCase().includes(phoneName));
+									}
+									else {
+										phones.data.filter();
+									}
 								}
 							}
 						},
