@@ -91,7 +91,7 @@ export default class TopView extends JetView {
 
 		this.on(this.app, "bag:setvalue", (value) => {
 			let amountBag = `(${value})`;
-			if (value === 0) {
+			if (!value || value === 0) {
 				amountBag = "";
 			}
 			this.$$("bag").setValue(`Bag${amountBag}`);

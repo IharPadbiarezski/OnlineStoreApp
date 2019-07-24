@@ -1,4 +1,4 @@
-export const orders = new webix.DataCollection({
+export const customers = new webix.DataCollection({
 	data: [
 		{
 			id: "1",

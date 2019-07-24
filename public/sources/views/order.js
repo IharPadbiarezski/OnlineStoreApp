@@ -2,6 +2,7 @@ import {JetView} from "webix-jet";
 import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
 import Storage from "./localStorage/localStorage";
+import {orders} from "../models/orders";
 
 export default class ContactForm extends JetView {
 	config() {
@@ -68,8 +69,25 @@ export default class ContactForm extends JetView {
 					css: "checkout__button",
 					click: () => {
 						if (this.getRoot().validate()) {
+							const values = this.getRoot().getValues();
+							const allPnonesLS = Storage.getPhonesFromStorage();
+							allPnonesLS.forEach((phone) => {
+								// InsertMany must work too
+								let order = {
+									Product: phone.name,
+									Amount: phone.amount,
+									DeliveryAddress: values.DeliveryAddress,
+									DeliveryType: values.DeliveryType,
+									PaymentType: values.PaymentType,
+									Status: "In process",
+									OrderDate: new Date()
+								};
+								orders.add(order);
+							});
+							Storage.clearLocalStorage();
+							this.app.callEvent("bag:setvalue");
 							this.app.callEvent("screen:show", ["history"]);
-							// Storage.clearLocalStorage();
+							webix.message({type: "success", text: "Order created successfully!"});
 						}
 					}
 				}

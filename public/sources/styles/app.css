@@ -153,3 +153,12 @@
     color: #fff;
     background: #378bda;
 }
+.decline-reason__template {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+.decline-reason__template .webix_template {
+   padding: 50px 20px;
+   font-size: 30px;
+}
