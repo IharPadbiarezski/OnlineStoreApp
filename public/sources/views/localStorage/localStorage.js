@@ -30,11 +30,12 @@ export default class Storage {
 		localStorage.clear();
 	}
 
-	static getFromLocalStorage() {
-		let phonesLS = this.getPhonesFromStorage();
-
-		phonesLS.forEach((phone) => {
-            console.log(phone)
+	static getTotalAmount() {
+		let totalAmount = 0;
+		const phonesFromLS = Storage.getPhonesFromStorage();
+		phonesFromLS.forEach((phone) => {
+			totalAmount += phone.counter;
 		});
+		return totalAmount;
 	}
 }

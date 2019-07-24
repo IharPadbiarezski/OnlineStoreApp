@@ -54,8 +54,8 @@ export default class PhonesTable extends JetView {
 							this.$$("datatable").remove(id.row);
 							this.total.sum -= deletedPhoneSum;
 							this.$$("totalSumTemplate").setValues(this.total);
-							const phonesLengthLS = Storage.getPhonesFromStorage().length;
-							this.app.callEvent("bag:setvalue", [phonesLengthLS]);
+							const phonesTotalAmount = Storage.getTotalAmount();
+							this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 						}
 					});
 					return false;

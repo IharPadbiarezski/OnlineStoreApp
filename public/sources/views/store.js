@@ -54,8 +54,7 @@ export default class PhonesTable extends JetView {
 
 			],
 			on: {
-				onItemDblClick: (id, e, node) => {
-					// console.log(id, e, node);
+				onItemDblClick: (id) => {
 					const values = this.getRoot().getItem(id);
 					this.phoneInfo.showWindow(values);
 				}
@@ -77,7 +76,8 @@ export default class PhonesTable extends JetView {
 						localStorage.setItem("phones", JSON.stringify(phonesLS));
 						Storage.saveIntoStorage(phone);
 						webix.message(`${phone.name} has been added to your bag`);
-						this.app.callEvent("bag:setvalue", [phonesLS.length + 1]);
+						const phonesTotalAmount = Storage.getTotalAmount();
+						this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 					}
 				}
 			}
