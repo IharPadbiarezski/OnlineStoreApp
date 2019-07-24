@@ -18,16 +18,7 @@ export default class PhonesTable extends JetView {
 					view: "counter",
 					width: 120,
 					localId: "counter",
-					css: "phones__counter",
-					on: {
-						onChange: (newVal, oldVal) => {
-							// console.log(newVal);
-							// console.log(val)
-						}
-					},
-					onClick: (e, id) => {
-						console.log("hi");
-					}
+					css: "phones__counter"
 				}
 			},
 			columns: [
@@ -70,20 +61,24 @@ export default class PhonesTable extends JetView {
 				}
 			},
 			onClick: {
-				shoppingCart: (e, id, node) => {
-					console.log(id, e, node);
-
+				shoppingCart: (e, id) => {
 					const phone = this.getRoot().getItem(id);
-					const phonesLS = Storage.getPhonesFromStorage();
-					phonesLS.forEach((phoneLS, index) => {
-						if (+phoneLS.id === +id) {
-							phonesLS.splice(index, 1);
-						}
-					});
-					localStorage.setItem("phones", JSON.stringify(phonesLS));
-					Storage.saveIntoStorage(phone);
-					webix.message(`${phone.name} has been added to your bag`);
-					this.app.callEvent("bag:setvalue", [phonesLS.length + 1]);
+					if (!phone.counter) {
+						webix.message({type: "error", text: "Please, select at least one!"});
+					}
+					else {
+						const phonesLS = Storage.getPhonesFromStorage();
+						phonesLS.forEach((phoneLS, index) => {
+							if (+phoneLS.id === +id) {
+								phonesLS.splice(index, 1);
+							}
+						});
+						phone.sum = phone.counter * phone.price;
+						localStorage.setItem("phones", JSON.stringify(phonesLS));
+						Storage.saveIntoStorage(phone);
+						webix.message(`${phone.name} has been added to your bag`);
+						this.app.callEvent("bag:setvalue", [phonesLS.length + 1]);
+					}
 				}
 			}
 		};

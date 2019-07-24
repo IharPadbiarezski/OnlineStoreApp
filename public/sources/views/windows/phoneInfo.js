@@ -10,7 +10,6 @@ export default class PhoneInfoWindow extends JetView {
 			elements: [
 				{
 					view: "label",
-					// label: "Varin Shop",
 					localId: "label",
 					css: "toolbar__element"
 				},

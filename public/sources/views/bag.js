@@ -22,11 +22,7 @@ export default class PhonesTable extends JetView {
 					fillspace: true
 				},
 				{
-					id: "rating",
-					header: "Rating"
-				},
-				{
-					id: "amount",
+					id: "counter",
 					header: "Amount"
 				},
 				{
@@ -46,9 +42,6 @@ export default class PhonesTable extends JetView {
 
 			],
 			onClick: {
-				shoppingCart: (e, id, node) => {
-
-				},
 				deleteIcon: (e, id) => {
 					webix.confirm({
 						text: "The phote will be deleted. Deleting cannot be undone... <br/> Are you sure?",
@@ -120,8 +113,6 @@ export default class PhonesTable extends JetView {
 			sum: 0
 		};
 		phonesLS.forEach((phone) => {
-			let amount = 2;
-			phone.sum = amount * phone.price;
 			this.total.sum += phone.sum;
 		});
 		this.$$("totalSumTemplate").setValues(this.total);
