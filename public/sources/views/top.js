@@ -24,7 +24,10 @@ export default class TopView extends JetView {
 						{
 							view: "button",
 							css: "webix_transparent toolbar__element",
-							label: "History"
+							label: "History",
+							click: () => {
+								this.show("history");
+							}
 						},
 						{
 							view: "button",
@@ -82,13 +85,16 @@ export default class TopView extends JetView {
 	}
 
 	init() {
-
 		phoneModels.waitData.then(() => {
 			this.$$("tree").sync(phoneModels);
 		});
 
 		this.on(this.app, "bag:setvalue", (value) => {
-			this.$$("bag").setValue(`Bag(${value})`);
+			let amountBag = `(${value})`;
+			if (value === 0) {
+				amountBag = "";
+			}
+			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
 
 		this.on(this.app, "screen:show", (name) => {
@@ -96,8 +102,6 @@ export default class TopView extends JetView {
 		});
 
 		const phonesTotalAmount = Storage.getTotalAmount();
-		if (phonesTotalAmount !== 0) {
-			this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
-		}
+		this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 	}
 }

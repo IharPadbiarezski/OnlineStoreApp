@@ -22,7 +22,7 @@ export default class PhonesTable extends JetView {
 					fillspace: true
 				},
 				{
-					id: "counter",
+					id: "amount",
 					header: "Amount"
 				},
 				{
@@ -54,7 +54,7 @@ export default class PhonesTable extends JetView {
 							this.$$("datatable").remove(id.row);
 							this.total.sum -= deletedPhoneSum;
 							this.$$("totalSumTemplate").setValues(this.total);
-							const phonesTotalAmount = Storage.getTotalAmount();
+							let phonesTotalAmount = Storage.getTotalAmount();
 							this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 						}
 					});

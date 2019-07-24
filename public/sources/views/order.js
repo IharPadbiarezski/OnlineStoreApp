@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
+import Storage from "./localStorage/localStorage";
 
 export default class ContactForm extends JetView {
 	config() {
@@ -67,7 +68,8 @@ export default class ContactForm extends JetView {
 					css: "checkout__button",
 					click: () => {
 						if (this.getRoot().validate()) {
-							console.log("Hello there");
+							this.app.callEvent("screen:show", ["history"]);
+							// Storage.clearLocalStorage();
 						}
 					}
 				}

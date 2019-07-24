@@ -88,9 +88,6 @@
 .phones__tree .webix_tree_close:before {
     content: "\F025";
 }
-.phones__counter {
-    padding: 10px 0;
-}
 .photo_info_close__btn .webix_button, .photo_info_close__btn .webix_button:hover {
     background: transparent;
 }
@@ -141,4 +138,18 @@
 }
 .total__template .webix_template {
     line-height: 50px;
+}
+.phone__counter {
+    width: 80px;
+    height: 32px;
+    padding: 15px 0;
+}
+.phone-counter__button {
+    color: #fff;
+    background: #3B93E7;
+    font-weight: bold;
+}
+.phone-counter__button:hover {
+    color: #fff;
+    background: #378bda;
 }
