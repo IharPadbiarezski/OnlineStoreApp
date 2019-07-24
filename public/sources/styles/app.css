@@ -121,16 +121,19 @@
 .bag__delete-icon {
     font-size: 20px;
 }
-.make-order__button.webix_secondary .webix_button {
+.make-order__button.webix_secondary .webix_button,
+.checkout__button.webix_primary .webix_button {
     background: #3B93E7;
     color: #FFFFFF;
 }
-.make-order__button.webix_secondary .webix_button:hover {
+.make-order__button.webix_secondary .webix_button:hover,
+.checkout__button.webix_primary .webix_button:hover {
     background: #378bda;
     color: #FFFFFF;
 }
 
-.make-order__button.webix_secondary .webix_button:active {
+.make-order__button.webix_secondary .webix_button:active,
+.checkout__button.webix_primary .webix_button:active {
     background-color: #378bda;
 }
 .total__template .webix_view {

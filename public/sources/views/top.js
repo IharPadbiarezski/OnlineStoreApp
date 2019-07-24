@@ -91,6 +91,10 @@ export default class TopView extends JetView {
 			this.$$("bag").setValue(`Bag(${value})`);
 		});
 
+		this.on(this.app, "screen:show", (name) => {
+			this.show(name);
+		});
+
 		const phonesTotalAmount = Storage.getTotalAmount();
 		if (phonesTotalAmount !== 0) {
 			this.app.callEvent("bag:setvalue", [phonesTotalAmount]);

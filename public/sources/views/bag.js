@@ -92,7 +92,7 @@ export default class PhonesTable extends JetView {
 					width: 300,
 					align: "left",
 					click: () => {
-						console.log("button");
+						this.app.callEvent("screen:show", ["order"]);
 					}
 				}
 			]

@@ -34,7 +34,9 @@ export default class Storage {
 		let totalAmount = 0;
 		const phonesFromLS = Storage.getPhonesFromStorage();
 		phonesFromLS.forEach((phone) => {
-			totalAmount += phone.counter;
+			if (phone.counter) {
+				totalAmount += phone.counter;
+			}
 		});
 		return totalAmount;
 	}
