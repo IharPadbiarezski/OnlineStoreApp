@@ -59,8 +59,14 @@
 .toolbar__bg {
     background: #3B93E7;
 }
+.toolbar-login__bg {
+    background: #F5F5F5;
+}
 .webix_toolbar .toolbar__element .webix_el_box, .webix_toolbar .toolbar__element .webix_button {
     color: #fff;
+}
+.webix_toolbar .toolbar-login__element .webix_el_box, .webix_toolbar .toolbar-login__element .webix_button {
+    color: #919191;
 }
 .shoppingCart {
     font-size: 40px;
@@ -119,18 +125,21 @@
     font-size: 20px;
 }
 .make-order__button.webix_secondary .webix_button,
-.checkout__button.webix_primary .webix_button {
+.checkout__button.webix_primary .webix_button,
+.login__button.webix_secondary .webix_button {
     background: #3B93E7;
     color: #FFFFFF;
 }
 .make-order__button.webix_secondary .webix_button:hover,
-.checkout__button.webix_primary .webix_button:hover {
+.checkout__button.webix_primary .webix_button:hover,
+.login__button.webix_secondary .webix_button:hover {
     background: #378bda;
     color: #FFFFFF;
 }
 
 .make-order__button.webix_secondary .webix_button:active,
-.checkout__button.webix_primary .webix_button:active {
+.checkout__button.webix_primary .webix_button:active,
+.login__button.webix_secondary .webix_button:active {
     background-color: #378bda;
 }
 .total__template .webix_view {
@@ -161,4 +170,63 @@
 .decline-reason__template .webix_template {
    padding: 50px 20px;
    font-size: 30px;
+}
+.login__header {
+    background: #F5F5F5;
+}
+.login-button-container.webix_view.webix_layout_line {
+    margin: 10px auto;
+    width: 300px;
+}
+.login__button.webix_secondary, .login__checkbox {
+    padding-left: 150px;
+}
+
+
+/* Animation for the LOGIN form */
+
+.webixappstart{
+    opacity:0;
+}
+.webixapp{
+    transition: opacity 500ms;
+    opacity: 1;
+}
+
+/*data loading status*/
+.status_good, .status_error, .status_saving{
+	text-align: center;
+	margin-left:-12px;
+}
+.status_error{
+	color:red;
+}
+.status_good{
+	color:green;
+}
+
+/*login form*/
+.invalid_login .webix_header > div{
+    background: #FC3636;
+    transition: background 1s;
+}
+.invalid_login{
+    -webkit-animation: formshake .5s linear;
+}
+@-webkit-keyframes formshake {
+    8%, 41% {
+        -webkit-transform: translateX(-10px);
+    }
+    25%, 58% {
+        -webkit-transform: translateX(10px);
+    }
+    75% {
+        -webkit-transform: translateX(-5px);
+    }
+    92% {
+        -webkit-transform: translateX(5px);
+    }
+    0%, 100% {
+        -webkit-transform: translateX(0);
+    }
 }

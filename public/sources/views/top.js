@@ -10,9 +10,17 @@ export default class TopView extends JetView {
 			height: 56,
 			css: "toolbar__bg",
 			elements: [
-				{view: "label", label: "Varin Shop", css: "toolbar__element"},
+				{
+					view: "label",
+					label: "Varin Shop",
+					css: "toolbar__element"
+				},
 				{},
-				{view: "label", label: "Hi, varias!", css: "toolbar__element"},
+				{
+					view: "label",
+					label: "Hi, varias!",
+					css: "toolbar__element"
+				},
 				{},
 				{
 					cols: [
@@ -21,7 +29,7 @@ export default class TopView extends JetView {
 							css: "webix_transparent toolbar__element",
 							label: "Logout",
 							click: () => {
-								this.show("start");
+								this.show("/logout");
 							}
 						},
 						{
