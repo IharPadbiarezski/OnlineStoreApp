@@ -98,6 +98,7 @@ export default class TopView extends JetView {
 	init() {
 		phoneModels.waitData.then(() => {
 			this.$$("tree").sync(phoneModels);
+			// this.show("admin")
 		});
 
 		this.on(this.app, "bag:setvalue", (value) => {
