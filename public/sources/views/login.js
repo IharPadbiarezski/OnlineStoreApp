@@ -27,6 +27,12 @@ export default class LoginView extends JetView {
 									this.showElement("loginForm");
 									this.showElement("loginHeader");
 								}
+								if (this.$$("resetPassForm")) {
+									this.hideElement("resetPassForm");
+									this.hideElement("resetPassHeader");
+									this.showElement("loginForm");
+									this.showElement("loginHeader");
+								}
 							}
 						},
 						{
@@ -38,6 +44,12 @@ export default class LoginView extends JetView {
 								if (this.$$("loginForm")) {
 									this.hideElement("loginForm");
 									this.hideElement("loginHeader");
+									this.showElement("registerForm");
+									this.showElement("registerHeader");
+								}
+								if (this.$$("resetPassForm")) {
+									this.hideElement("resetPassForm");
+									this.hideElement("resetPassHeader");
 									this.showElement("registerForm");
 									this.showElement("registerHeader");
 								}
@@ -59,6 +71,13 @@ export default class LoginView extends JetView {
 			localId: "registerHeader",
 			type: "header",
 			template: "Register",
+			css: "login__header"
+		};
+
+		const resetPassHeader = {
+			localId: "resetPassHeader",
+			type: "header",
+			template: "Reset Passwaord",
 			css: "login__header"
 		};
 
@@ -98,16 +117,23 @@ export default class LoginView extends JetView {
 						{
 							view: "button",
 							value: "Login",
-							click: () => this.doLogin(),
 							hotkey: "enter",
 							css: "login__button",
-							autowidth: true
+							autowidth: true,
+							click: () => this.doLogin()
 						},
 						{
-							template: "<a target='_blank' href='http://docs.webix.com'>Forgot Your Password</a>",
+							view: "button",
+							value: "Forgot Your Password",
+							hotkey: "enter",
+							css: "reset-password__button",
 							autowidth: true,
-							borderless: true,
-							width: 200
+							click: () => {
+								this.hideElement("loginForm");
+								this.hideElement("loginHeader");
+								this.showElement("resetPassForm");
+								this.showElement("resetPassHeader");
+							}
 						}
 					]
 				}
@@ -132,7 +158,8 @@ export default class LoginView extends JetView {
 					view: "text",
 					name: "name",
 					label: "Name",
-					labelAlign: "right"
+					labelAlign: "right",
+					invalidMessage: "The name is required."
 				},
 				{
 					view: "text",
@@ -174,8 +201,45 @@ export default class LoginView extends JetView {
 				labelWidth: 150
 			},
 			rules: {
+				name: webix.rules.isNotEmpty,
 				login: webix.rules.isEmail,
 				pass: webix.rules.isNotEmpty
+			}
+		};
+
+		const resetPassForm = {
+			view: "form",
+			localId: "resetPassForm",
+			width: 600,
+			borderless: false,
+			margin: 10,
+			rows: [
+				{
+					view: "text",
+					name: "email",
+					label: "E-Mail Address",
+					labelAlign: "right",
+					invalidMessage: "The email has already been taken."
+				},
+				{
+					css: "login-button-container",
+					cols: [
+						{
+							view: "button",
+							value: "Send Password Reset Link",
+							click: () => this.doResetPassword(),
+							hotkey: "enter",
+							css: "login__button",
+							autowidth: true
+						}
+					]
+				}
+			],
+			elementsConfig: {
+				labelWidth: 150
+			},
+			rules: {
+				email: webix.rules.isEmail
 			}
 		};
 
@@ -195,6 +259,8 @@ export default class LoginView extends JetView {
 										registerForm,
 										loginHeader,
 										loginForm,
+										resetPassHeader,
+										resetPassForm,
 										{}
 									]},
 								{}
@@ -209,6 +275,8 @@ export default class LoginView extends JetView {
 	init(view) {
 		this.hideElement("registerForm");
 		this.hideElement("registerHeader");
+		this.hideElement("resetPassForm");
+		this.hideElement("resetPassHeader");
 		view.$view.querySelector("input").focus();
 	}
 
@@ -227,6 +295,23 @@ export default class LoginView extends JetView {
 				});
 			});
 		}
+	}
+
+	doResetPassword() {
+		// const user = this.app.getService("user");
+		// const form = this.$$("loginForm");
+		// const ui = this.$$("loginTop");
+
+		// if (form && form.validate()) {
+		// 	const data = form.getValues();
+		// 	user.login(data.login, data.pass).catch(() => {
+		// 		webix.html.removeCss(ui.$view, "invalid_login");
+		// 		form.elements.pass.focus();
+		// 		webix.delay(() => {
+		// 			webix.html.addCss(ui.$view, "invalid_login");
+		// 		});
+		// 	});
+		// }
 	}
 
 	showElement(elemId) {

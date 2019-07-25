@@ -142,6 +142,19 @@
 .login__button.webix_secondary .webix_button:active {
     background-color: #378bda;
 }
+.reset-password__button.webix_secondary .webix_button {
+    background: transparent;
+    color: rgb(85, 173, 255);
+    font-weight: 400;
+}
+.reset-password__button.webix_secondary .webix_button:hover {
+    background: transparent;
+    color: #3B93E7;
+}
+.reset-password__button.webix_secondary .webix_button:active {
+    background: transparent;
+    color: #3B93E7;
+}
 .total__template .webix_view {
     background: #FAFAFA;
 }
