@@ -19,7 +19,10 @@ export default class TopView extends JetView {
 						{
 							view: "button",
 							css: "webix_transparent toolbar__element",
-							label: "Logout"
+							label: "Logout",
+							click: () => {
+								this.show("start");
+							}
 						},
 						{
 							view: "button",

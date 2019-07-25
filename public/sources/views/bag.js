@@ -116,8 +116,8 @@ export default class PhonesTable extends JetView {
 			phonesLS.forEach((phone) => {
 				this.total.sum += phone.sum;
 			});
-			this.$$("totalSumTemplate").setValues(this.total);
 			this.$$("datatable").parse(phonesLS);
 		}
+		this.$$("totalSumTemplate").setValues(this.total);
 	}
 }

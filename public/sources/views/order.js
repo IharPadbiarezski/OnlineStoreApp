@@ -72,7 +72,6 @@ export default class ContactForm extends JetView {
 							const values = this.getRoot().getValues();
 							const allPnonesLS = Storage.getPhonesFromStorage();
 							allPnonesLS.forEach((phone) => {
-								// InsertMany must work too
 								let order = {
 									Product: phone.name,
 									Amount: phone.amount,
