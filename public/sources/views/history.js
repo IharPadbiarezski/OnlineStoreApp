@@ -3,7 +3,8 @@ import DeclineReasonsWindow from "./windows/declineReasons";
 import {orders} from "../models/orders";
 import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
-import {declineReasons} from "../models/declineReasons";
+import {reasons} from "../models/declineReasons";
+import {statuses} from "../models/statuses";
 
 export default class PhonesTable extends JetView {
 	config() {
@@ -43,17 +44,23 @@ export default class PhonesTable extends JetView {
 				{
 					id: "Status",
 					header: "Status",
-					css: "statusCell"
+					css: "statusCell",
+					options: statuses
 				}
 			],
 			onClick: {
 				statusCell: (e, id) => {
-					const status = this.getRoot().getItem(id.row).Status;
-					if (status === "Declined") {
-						const order = this.getRoot().getItem(id);
-						const reason = declineReasons.find(declineReason => declineReason.orderId === order.id);
-						this.declineReasons.showWindow(reason[0]);
-					}
+					const statusId = this.getRoot().getItem(id.row).Status;
+					statuses.waitData.then(() => {
+						const status = statuses.getItem(statusId).value;
+						if (status === "Declined") {
+							const order = this.getRoot().getItem(id);
+							const reason = reasons.find((declineReason) => {
+								return declineReason.OrderId === order.id;
+							});
+							this.declineReasons.showWindow(reason[0]);
+						}
+					});
 					return false;
 				}
 			}

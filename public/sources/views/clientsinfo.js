@@ -34,8 +34,8 @@ export default class ClientsInfoView extends JetView {
 				}
 			],
 			rules: {
-                Name: webix.rules.isNotEmpty,
-                Email: webix.rules.isEmail
+				Name: webix.rules.isNotEmpty,
+				Email: webix.rules.isEmail
 			}
 		};
 	}

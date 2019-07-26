@@ -6,7 +6,7 @@ export default class LoginView extends JetView {
 			view: "toolbar",
 			height: 56,
 			css: "toolbar-login__bg",
-			elements: [
+			rows: [
 				{
 					view: "label",
 					label: "Varin Shop",

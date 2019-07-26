@@ -126,20 +126,23 @@
 }
 .make-order__button.webix_secondary .webix_button,
 .checkout__button.webix_primary .webix_button,
-.login__button.webix_secondary .webix_button {
+.login__button.webix_secondary .webix_button,
+.save-status__button.webix_secondary .webix_button {
     background: #3B93E7;
     color: #FFFFFF;
 }
 .make-order__button.webix_secondary .webix_button:hover,
 .checkout__button.webix_primary .webix_button:hover,
-.login__button.webix_secondary .webix_button:hover {
+.login__button.webix_secondary .webix_button:hover,
+.save-status__button.webix_secondary .webix_button:hover {
     background: #378bda;
     color: #FFFFFF;
 }
 
 .make-order__button.webix_secondary .webix_button:active,
 .checkout__button.webix_primary .webix_button:active,
-.login__button.webix_secondary .webix_button:active {
+.login__button.webix_secondary .webix_button:active,
+.save-status__button.webix_secondary .webix_button:active {
     background-color: #378bda;
 }
 .reset-password__button.webix_secondary .webix_button {

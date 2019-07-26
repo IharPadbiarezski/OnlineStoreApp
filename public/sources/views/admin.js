@@ -2,42 +2,23 @@ import {JetView, plugins} from "webix-jet";
 
 export default class AdminView extends JetView {
 	config() {
-		// let header = {
-		// 	type: "header", template: this.app.config.name, css: "webix_header app_header"
-		// };
-
-		let menu = {
+		const menu = {
 			view: "menu",
-			id: "menu",
-			width: 180,
+			localId: "menu",
+			width: 250,
 			layout: "y",
 			select: true,
-			// template: "<span class='webix_icon #icon#'></span> #value# ",
 			data: [
-				{value: "Users", id: "clientsinfo"},
-				{value: "Info", id: "orders"},
-				{value: "List", id: "newproduct"}
+				{value: "Clients Info", id: "clientsinfo"},
+				{value: "Orders", id: "orders"},
+				{value: "New Product", id: "newproduct"}
 			]
 		};
 
-		let ui = {
-			type: "clean",
-			paddingX: 5,
-			css: "app_layout",
+		const ui = {
 			cols: [
-				{
-					paddingX: 5,
-					paddingY: 10,
-					rows: [{css: "webix_shadow_medium", rows: [ menu]}]
-				},
-				{
-					type: "wide",
-					paddingY: 10,
-					paddingX: 5,
-					rows: [
-						{$subview: true}
-					]
-				}
+				menu,
+				{$subview: true}
 			]
 		};
 
