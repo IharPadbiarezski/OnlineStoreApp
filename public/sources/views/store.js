@@ -54,7 +54,7 @@ export default class PhonesTable extends JetView {
 				{
 					id: "image",
 					header: "Image",
-					template: obj => `<img class="phone__image" src=${obj.image} />`
+					template: obj => `<img class="phone__image" src=${obj.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSneGZ71w8pG8NZWOsf14r7WOBZ8IXl4PVNqNcLx5YBeysI9BMZ"} />`
 				},
 				{
 					id: "name",
