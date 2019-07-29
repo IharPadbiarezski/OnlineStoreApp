@@ -9,12 +9,14 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top/store"
+			start: "/top/store",
+			access: "customers"
+			// access: "admin"
 		};
 
 		super({...defaults, ...config});
 
-		// this.use(plugins.User, {model: session});
+		this.use(plugins.User, {model: session});
 	}
 }
 
@@ -23,17 +25,7 @@ if (!BUILD_AS_MODULE) {
 		let app = new MyApp();
 		app.render();
 		app.attachEvent("app:error:resolve", () => {
-			webix.delay(() => app.show("/top/store"));
+			webix.delay(() => app.show("/top/login"));
 		});
-		// app.use(plugins.User, {
-		// 	model: session,
-		// 	// login: "/login", default /login
-		// 	// logout: "/logout", default
-		// 	afterLogin: "/store",
-		// 	// afterLogout: "/login" default
-		// 	// ping: 15000,
-		// 	// afterLogin: "someStartPage",
-		// 	user: { /* ... */ }
-		// });
 	});
 }
