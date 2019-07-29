@@ -83,6 +83,8 @@ export default class StatusWindow extends JetView {
 						else if (this.status !== "declined") {
 							if (values.ReasonId) {
 								reasons.remove(values.ReasonId);
+								values.ReasonId = "";
+								values.DeclinedReason = "";
 							}
 						}
 						this.hideWindow();
