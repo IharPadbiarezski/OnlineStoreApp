@@ -84,8 +84,9 @@ export default class LoginForm extends JetView {
 									values.amount = 0;
 									values.rating = 0;
 									values.image = this.$$("picture").getValues().picture;
-									console.log(values);
 									phones.add(values);
+									this.getRoot().clear();
+									this.$$("picture").setValues({picture: ""});
 								}
 							}
 						},
