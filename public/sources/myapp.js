@@ -16,7 +16,7 @@ export default class MyApp extends JetApp {
 
 		super({...defaults, ...config});
 
-		this.use(plugins.User, {model: session});
+		// this.use(plugins.User, {model: session});
 	}
 }
 

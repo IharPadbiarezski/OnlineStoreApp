@@ -55,9 +55,7 @@ export default class PhonesTable extends JetView {
 						const status = statuses.getItem(statusId).value;
 						if (status === "Declined") {
 							const order = this.getRoot().getItem(id);
-							const reason = reasons.find((declineReason) => {
-								return declineReason.OrderId === order.id;
-							});
+							const reason = reasons.find(declineReason => declineReason.OrderId === order.id);
 							this.declineReasons.showWindow(reason[0]);
 						}
 					});
