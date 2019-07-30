@@ -8,6 +8,7 @@ exports.all = (req, res) => {
         else {
             items.forEach((item) => {
                 item.id = item._id;
+                item.amount = 0;
             });
             res.send(items);
         }
@@ -31,8 +32,7 @@ exports.create = (req, res) => {
         image: req.body.image,
         name: req.body.name,
         price: req.body.price,
-        rating: req.body.rating,
-        amount: req.body.amount
+        rating: req.body.rating
     };
     
 	Phones.create(phone, (err, result) => {
@@ -52,8 +52,7 @@ exports.update = (req, res) => {
         image: req.body.image,
         name: req.body.name,
         price: req.body.price,
-        rating: req.body.rating,
-        amount: req.body.amount
+        rating: req.body.rating
     };
 
 	Phones.update(id, phone, (err) => {

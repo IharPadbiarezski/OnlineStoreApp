@@ -6,11 +6,8 @@ exports.all = (req, res) => {
             res.send({error: "An error has occured"});
         }
         else {
-            // let id = 1.0;
             items.forEach((item) => {
                 item.id = item._id;
-                // id += 0.1;
-                // item.id = Math.round(id * 100) / 100;
             });
             const data = [{
                 id: "root",
