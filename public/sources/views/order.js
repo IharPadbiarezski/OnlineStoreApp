@@ -81,7 +81,7 @@ export default class ContactForm extends JetView {
 									DeliveryAddress: values.DeliveryAddress,
 									DeliveryType: values.DeliveryType,
 									PaymentType: values.PaymentType,
-									Status: "1",
+									Status: "5d3ee8cb3c98b2708cbc39cb",
 									OrderDate: new Date()
 								};
 								orders.add(order);

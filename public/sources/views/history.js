@@ -24,7 +24,8 @@ export default class PhonesTable extends JetView {
 				},
 				{
 					id: "DeliveryAddress",
-					header: "Address"
+					header: "Address",
+					fillspace: true
 				},
 				{
 					id: "DeliveryType",
@@ -39,7 +40,7 @@ export default class PhonesTable extends JetView {
 				{
 					id: "OrderDate",
 					header: "Order date",
-					width: 150
+					width: 170
 				},
 				{
 					id: "Status",
