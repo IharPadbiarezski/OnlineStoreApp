@@ -1,7 +1,4 @@
 import {JetView} from "webix-jet";
-import {phoneModels} from "../models/phoneModels";
-import {phones} from "../models/phones";
-import Storage from "./localStorage/localStorage";
 
 export default class TopView extends JetView {
 	config() {
@@ -10,9 +7,17 @@ export default class TopView extends JetView {
 			height: 56,
 			css: "toolbar__bg",
 			elements: [
-				{view: "label", label: "Varin Shop", css: "toolbar__element"},
+				{
+					view: "label",
+					label: "Varin Shop",
+					css: "toolbar__element"
+				},
 				{},
-				{view: "label", label: "Hi, varias!", css: "toolbar__element"},
+				{
+					view: "label",
+					label: "Hi, varias!",
+					css: "toolbar__element"
+				},
 				{},
 				{
 					cols: [
@@ -21,7 +26,7 @@ export default class TopView extends JetView {
 							css: "webix_transparent toolbar__element",
 							label: "Logout",
 							click: () => {
-								this.show("start");
+								this.show("/logout");
 							}
 						},
 						{
@@ -29,7 +34,7 @@ export default class TopView extends JetView {
 							css: "webix_transparent toolbar__element",
 							label: "History",
 							click: () => {
-								this.show("history");
+								this.app.callEvent("screen:show", ["history"]);
 							}
 						},
 						{
@@ -38,7 +43,7 @@ export default class TopView extends JetView {
 							css: "webix_transparent toolbar__element",
 							value: "Bag",
 							click: () => {
-								this.show("bag");
+								this.app.callEvent("screen:show", ["bag"]);
 							}
 						}
 					]
@@ -52,35 +57,7 @@ export default class TopView extends JetView {
 			css: "app_layout",
 			rows: [
 				toolBar,
-				{
-					cols: [
-						{
-							view: "tree",
-							localId: "tree",
-							width: 220,
-							select: true,
-							css: "phones__tree",
-							on: {
-								onAfterSelect: (id) => {
-									this.show("store");
-									const phoneName = this.$$("tree").getItem(id).value.toLowerCase();
-									if (phoneName !== "phones") {
-										phones.data.filter(item => item.name.toLowerCase().includes(phoneName));
-									}
-									else {
-										phones.data.filter();
-									}
-								}
-							}
-						},
-						{
-							type: "wide",
-							rows: [
-								{$subview: true}
-							]
-						}
-					]
-				}
+				{$subview: true}
 			]
 		};
 
@@ -88,9 +65,9 @@ export default class TopView extends JetView {
 	}
 
 	init() {
-		phoneModels.waitData.then(() => {
-			this.$$("tree").sync(phoneModels);
-		});
+		if (this.app.config.access === "admin") {
+			this.show("admin/clientsinfo");
+		}
 
 		this.on(this.app, "bag:setvalue", (value) => {
 			let amountBag = `(${value})`;
@@ -99,12 +76,5 @@ export default class TopView extends JetView {
 			}
 			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
-
-		this.on(this.app, "screen:show", (name) => {
-			this.show(name);
-		});
-
-		const phonesTotalAmount = Storage.getTotalAmount();
-		this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 	}
 }

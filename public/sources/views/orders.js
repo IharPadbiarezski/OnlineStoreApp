@@ -1,18 +1,22 @@
 import {JetView} from "webix-jet";
-import DeclineReasonsWindow from "./windows/declineReasons";
 import {orders} from "../models/orders";
 import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
-import {reasons} from "../models/declineReasons";
 import {statuses} from "../models/statuses";
+import StatusWindow from "./windows/status";
 
-export default class PhonesTable extends JetView {
+export default class ClientsInfoView extends JetView {
 	config() {
 		return {
 			view: "datatable",
-			scroll: "y",
+			scroll: true,
 			rowHeight: 60,
 			columns: [
+				{
+					id: "id",
+					header: "#",
+					width: 20
+				},
 				{
 					id: "Product",
 					header: ["Product", {content: "textFilter"}],
@@ -23,8 +27,23 @@ export default class PhonesTable extends JetView {
 					header: "Amount"
 				},
 				{
+					id: "Name",
+					header: ["Buyer name", {content: "textFilter"}]
+				},
+				{
+					id: "Email",
+					header: ["Buyer email", {content: "textFilter"}],
+					fillspace: true
+				},
+				{
+					id: "Phone",
+					header: "Phone",
+					fillspace: true
+				},
+				{
 					id: "DeliveryAddress",
-					header: "Address"
+					header: "Address",
+					fillspace: true
 				},
 				{
 					id: "DeliveryType",
@@ -44,31 +63,24 @@ export default class PhonesTable extends JetView {
 				{
 					id: "Status",
 					header: "Status",
+					width: 150,
 					css: "statusCell",
-					options: statuses
+					options: statuses,
+					editor: "combo"
 				}
 			],
 			onClick: {
 				statusCell: (e, id) => {
-					const statusId = this.getRoot().getItem(id.row).Status;
-					statuses.waitData.then(() => {
-						const status = statuses.getItem(statusId).value;
-						if (status === "Declined") {
-							const order = this.getRoot().getItem(id);
-							const reason = reasons.find(declineReason => declineReason.OrderId === order.id);
-							this.declineReasons.showWindow(reason[0]);
-						}
-					});
-					return false;
+					const values = orders.getItem(id.row);
+					this.statusWindow.showWindow(values);
 				}
 			}
 		};
 	}
 
 	init(view) {
-		orders.waitData.then(() => {
-			view.sync(orders);
-			this.declineReasons = this.ui(DeclineReasonsWindow);
-		});
+		view.sync(orders);
+		this.statusWindow = this.ui(StatusWindow);
 	}
 }
+

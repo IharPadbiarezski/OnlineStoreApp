@@ -1,5 +1,6 @@
-import {JetApp, EmptyRouter, HashRouter} from "webix-jet";
+import {JetApp, EmptyRouter, HashRouter, plugins} from "webix-jet";
 import "./styles/app.css";
+import session from "./models/session";
 
 export default class MyApp extends JetApp {
 	constructor(config) {
@@ -8,10 +9,14 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top/store"
+			start: "/top/store",
+			access: "customers"
+			// access: "admin"
 		};
 
 		super({...defaults, ...config});
+
+		// this.use(plugins.User, {model: session});
 	}
 }
 
@@ -20,7 +25,7 @@ if (!BUILD_AS_MODULE) {
 		let app = new MyApp();
 		app.render();
 		app.attachEvent("app:error:resolve", () => {
-			webix.delay(() => app.show("/top/store"));
+			webix.delay(() => app.show("/top/login"));
 		});
 	});
 }

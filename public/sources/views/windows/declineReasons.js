@@ -29,7 +29,7 @@ export default class DeclineReasonsWindow extends JetView {
 		const template = {
 			localId: "template",
 			css: "decline-reason__template",
-			template: obj => obj.reason
+			template: obj => obj.Reason
 		};
 
 		return {

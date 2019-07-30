@@ -74,11 +74,14 @@ export default class ContactForm extends JetView {
 							allPnonesLS.forEach((phone) => {
 								let order = {
 									Product: phone.name,
+									Name: values.Name,
+									Phone: values.Phone,
+									Email: values.Email,
 									Amount: phone.amount,
 									DeliveryAddress: values.DeliveryAddress,
 									DeliveryType: values.DeliveryType,
 									PaymentType: values.PaymentType,
-									Status: "In process",
+									Status: "1",
 									OrderDate: new Date()
 								};
 								orders.add(order);

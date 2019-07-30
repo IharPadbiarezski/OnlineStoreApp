@@ -11,7 +11,7 @@ export const orders = new webix.DataCollection({
 			Product: "Lenovo 5920",
 			Amount: 2,
 			OrderDate: "2017-01-30 13:44:57",
-			Status: "Declined"
+			Status: "3"
 		},
 		{
 			id: "2",
@@ -24,7 +24,7 @@ export const orders = new webix.DataCollection({
 			Product: "Lenovo 5920",
 			Amount: 2,
 			OrderDate: "2017-01-30 13:44:57",
-			Status: "Declined"
+			Status: "3"
 		},
 		{
 			id: "3",
@@ -37,7 +37,7 @@ export const orders = new webix.DataCollection({
 			Product: "Lenovo 5920",
 			Amount: 2,
 			OrderDate: "2017-01-30 13:44:57",
-			Status: "In process"
+			Status: "1"
 		}
 	]
 });
