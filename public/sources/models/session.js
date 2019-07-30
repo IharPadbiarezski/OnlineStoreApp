@@ -1,14 +1,16 @@
-let status = () => webix.ajax().post("http://localhost:3000/server/login/status")
+import {urls} from "../config/urls";
+
+let status = () => webix.ajax().post(urls.status)
 	.then(a => a.json());
 
-let login = (user, pass) => webix.ajax().post("http://localhost:3000/server/login", {
+let login = (user, pass) => webix.ajax().post(urls.login, {
 	user, pass
 }).then(a => a.json());
 
-let logout = () => webix.ajax().post("http://localhost:3000/server/logout")
+let logout = () => webix.ajax().post(urls.logout)
 	.then(a => a.json());
 
-let register = (user, pass, confpass, name) => webix.ajax().post("http://localhost:3000/server/register", {
+let register = (user, pass, confpass, name) => webix.ajax().post(urls.register, {
 	user, pass, confpass, name
 }).then(a => a.json());
 
