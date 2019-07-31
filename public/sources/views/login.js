@@ -1,4 +1,5 @@
 import {JetView} from "webix-jet";
+import {urls} from "../config/urls";
 
 export default class LoginView extends JetView {
 	config() {
@@ -186,7 +187,7 @@ export default class LoginView extends JetView {
 				},
 				{
 					view: "text",
-					name: "login",
+					name: "email",
 					label: "E-Mail Address",
 					labelAlign: "right",
 					invalidMessage: "The email has already been taken."
@@ -194,7 +195,7 @@ export default class LoginView extends JetView {
 				{
 					view: "text",
 					type: "password",
-					name: "pass",
+					name: "password",
 					label: "Password",
 					labelAlign: "right",
 					invalidMessage: "The password confirmation does not match."
@@ -202,7 +203,7 @@ export default class LoginView extends JetView {
 				{
 					view: "text",
 					type: "password",
-					name: "confpass",
+					name: "passwordConf",
 					label: "Confirm Password",
 					labelAlign: "right"
 				},
@@ -212,10 +213,14 @@ export default class LoginView extends JetView {
 						{
 							view: "button",
 							value: "Register",
-							click: () => this.doRegister(),
 							hotkey: "enter",
 							css: "login__button",
-							autowidth: true
+							autowidth: true,
+							click: () => {
+								if (this.$$("registerForm").validate()) {
+									this.doRegister();
+								}
+							}
 						}
 					]
 				}
@@ -225,8 +230,11 @@ export default class LoginView extends JetView {
 			},
 			rules: {
 				name: webix.rules.isNotEmpty,
-				login: webix.rules.isEmail,
-				pass: webix.rules.isNotEmpty
+				email: webix.rules.isEmail,
+				password: (value) => {
+					const passwordConf = this.$$("registerForm").getValues().passwordConf;
+					return value === passwordConf && value.length > 0;
+				}
 			}
 		};
 
@@ -301,6 +309,10 @@ export default class LoginView extends JetView {
 		this.hideElement("resetPassForm");
 		this.hideElement("resetPassHeader");
 		view.$view.querySelector("input").focus();
+		this.setValuesIntoForm();
+	}
+
+	setValuesIntoForm() {
 		const form = this.$$("loginForm");
 		const email = this.readCookie("email");
 		const password = this.readCookie("password");
@@ -379,19 +391,8 @@ export default class LoginView extends JetView {
 	}
 
 	doRegister() {
-		const user = this.app.getService("user");
-		const form = this.$$("registerForm");
-		const ui = this.$$("registerTop");
-
-		if (form && form.validate()) {
-			const data = form.getValues();
-			user.register(data.login, data.pass, data.confpass, name).catch(() => {
-				webix.html.removeCss(ui.$view, "invalid_login");
-				form.elements.pass.focus();
-				webix.delay(() => {
-					webix.html.addCss(ui.$view, "invalid_login");
-				});
-			});
-		}
+		const values = this.$$("registerForm").getValues();
+		values.date = new Date();
+		webix.ajax().post(urls.register, values);
 	}
 }

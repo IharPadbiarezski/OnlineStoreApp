@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.post(`${path.login}`, sessionController.login);
     app.post(`${path.status}`, sessionController.status);
     app.post(`${path.logout}`, sessionController.logout);
-    // app.post(`${path.register}`, sessionController.register);
+    app.post(`${path.register}`, sessionController.register);
 
 	// app.post(`${path.session}`, sessionController.all);
 	// app.get(`${path.session}:id`, sessionController.findById);

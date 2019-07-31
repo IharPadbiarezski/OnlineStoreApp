@@ -10,11 +10,7 @@ let login = (email, password) => webix.ajax().post(urls.login, {
 let logout = () => webix.ajax().post(urls.logout)
 	.then(a => a.json());
 
-let register = (user, pass, confpass, name) => webix.ajax().post(urls.register, {
-	user, pass, confpass, name
-}).then(a => a.json());
-
 export default {
-	status, login, logout, register
+	status, login, logout
 };
 
