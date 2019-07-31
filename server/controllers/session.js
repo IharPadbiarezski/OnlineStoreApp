@@ -1,12 +1,12 @@
 const Sessions = require('../models/session');
 
 exports.login = (req, res) => {
-    const query = {Email: req.body.user}
+    const query = {Email: req.body.email}
     Sessions.findOne(query, (err, item) => {
         if (err) {
              res.send({error: "An error has occured"});
         }
-        else if (req.body.pass === item.Password) {
+        else if (req.body.password === item.Password) {
             const user = {
                 id: item._id,
                 name: item.Name

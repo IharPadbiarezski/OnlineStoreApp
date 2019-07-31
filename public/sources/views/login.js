@@ -90,26 +90,27 @@ export default class LoginView extends JetView {
 			rows: [
 				{
 					view: "text",
-					name: "login",
+					name: "email",
 					label: "E-Mail Address",
 					labelAlign: "right"
 				},
 				{
 					view: "text",
 					type: "password",
-					name: "pass",
+					name: "password",
 					label: "Password",
 					labelAlign: "right"
 				},
 				{
 					view: "checkbox",
 					name: "remember",
+					localId: "rememberCheckbox",
 					labelRight: "Remember me",
 					labelPosition: "top",
 					css: "login__checkbox",
 					width: 100,
-					checkValue: "Available",
-					uncheckValue: "Unavailable"
+					checkValue: "Yes",
+					uncheckValue: "No"
 				},
 				{
 					css: "login-button-container",
@@ -120,7 +121,29 @@ export default class LoginView extends JetView {
 							hotkey: "enter",
 							css: "login__button",
 							autowidth: true,
-							click: () => this.doLogin()
+							click: () => {
+								const form = this.$$("loginForm");
+								let values = form.getValues();
+								this.doLogin(form, values);
+								if (values.remember === "Yes") {
+									let today = new Date();
+									let nextYear = today.getFullYear() + 1;
+									let month = today.getMonth();
+									let date = today.getDate();
+									this.createCookie("email", values.email, Date.UTC(nextYear, month, date));
+									this.createCookie("password", values.password, Date.UTC(nextYear, month, date));
+								}
+								else {
+									const email = this.readCookie("email");
+									const password = this.readCookie("password");
+									if (email) {
+										this.deleteCookie("email");
+									}
+									if (password) {
+										this.deleteCookie("password");
+									}
+								}
+							}
 						},
 						{
 							view: "button",
@@ -142,8 +165,8 @@ export default class LoginView extends JetView {
 				labelWidth: 150
 			},
 			rules: {
-				// login: webix.rules.isEmail,
-				pass: webix.rules.isNotEmpty
+				email: webix.rules.isEmail,
+				password: webix.rules.isNotEmpty
 			}
 		};
 
@@ -278,23 +301,54 @@ export default class LoginView extends JetView {
 		this.hideElement("resetPassForm");
 		this.hideElement("resetPassHeader");
 		view.$view.querySelector("input").focus();
+		const form = this.$$("loginForm");
+		const email = this.readCookie("email");
+		const password = this.readCookie("password");
+		const remember = "Yes";
+		if (email && password) {
+			const values = {email, password, remember};
+			form.setValues(values);
+		}
 	}
 
-	doLogin() {
+	doLogin(view, values) {
 		const user = this.app.getService("user");
-		const form = this.$$("loginForm");
 		const ui = this.$$("loginTop");
 
-		if (form && form.validate()) {
-			const data = form.getValues();
-			user.login(data.login, data.pass).catch(() => {
+		if (view && view.validate()) {
+			user.login(values.email, values.password).catch(() => {
 				webix.html.removeCss(ui.$view, "invalid_login");
-				form.elements.pass.focus();
+				view.elements.password.focus();
 				webix.delay(() => {
 					webix.html.addCss(ui.$view, "invalid_login");
 				});
 			});
 		}
+	}
+
+	createCookie(key, value, date) {
+		let expiration = new Date(date).toUTCString();
+		let cookie = `${escape(key)}=${escape(value)};expires=${expiration};`;
+		document.cookie = cookie;
+	}
+
+	readCookie(name) {
+		let key = `${name}=`;
+		let cookies = document.cookie.split(";");
+		for (let i = 0; i < cookies.length; i++) {
+			let cookie = cookies[i];
+			while (cookie.charAt(0) === " ") {
+				cookie = cookie.substring(1, cookie.length);
+			}
+			if (cookie.indexOf(key) === 0) {
+				return cookie.substring(key.length, cookie.length);
+			}
+		}
+		return null;
+	}
+
+	deleteCookie(name) {
+		this.createCookie(name, "", -1);
 	}
 
 	doResetPassword() {
