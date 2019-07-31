@@ -364,20 +364,7 @@ export default class LoginView extends JetView {
 	}
 
 	doResetPassword() {
-		// const user = this.app.getService("user");
-		// const form = this.$$("loginForm");
-		// const ui = this.$$("loginTop");
-
-		// if (form && form.validate()) {
-		// 	const data = form.getValues();
-		// 	user.login(data.login, data.pass).catch(() => {
-		// 		webix.html.removeCss(ui.$view, "invalid_login");
-		// 		form.elements.pass.focus();
-		// 		webix.delay(() => {
-		// 			webix.html.addCss(ui.$view, "invalid_login");
-		// 		});
-		// 	});
-		// }
+		
 	}
 
 	showElement(elemId) {
@@ -393,6 +380,8 @@ export default class LoginView extends JetView {
 	doRegister() {
 		const values = this.$$("registerForm").getValues();
 		values.date = new Date();
-		webix.ajax().post(urls.register, values);
+		webix.ajax().post(urls.register, values).then(() => {
+			// На страницу каталога переход здесь
+		});
 	}
 }
