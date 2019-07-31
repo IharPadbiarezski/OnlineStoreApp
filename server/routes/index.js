@@ -7,6 +7,7 @@ const paymentTypesRoutes = require("./paymentTypes_routes");
 const phoneModelsRoutes = require("./phoneModels_routes");
 const phonesRoutes = require("./phones_routes");
 const statusReasonsRoutes = require("./statusReasons_routes");
+const sessionRoutes = require("./session_routes");
 
 module.exports = (app) => {
 	clientsRoutes(app);
@@ -18,4 +19,5 @@ module.exports = (app) => {
 	phoneModelsRoutes(app);
 	phonesRoutes(app);
 	statusReasonsRoutes(app);
+	sessionRoutes(app);
 };

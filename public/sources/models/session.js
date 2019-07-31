@@ -15,6 +15,6 @@ let register = (user, pass, confpass, name) => webix.ajax().post(urls.register, 
 }).then(a => a.json());
 
 export default {
-	status, login, logout
+	status, login, logout, register
 };
 

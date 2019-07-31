@@ -10,5 +10,9 @@ module.exports = {
 	paymentTypes: `${version}paymentTypes/`,
 	phoneModels: `${version}phoneModels/`,
 	phones: `${version}phones/`,
-	statusReasons: `${version}statusReasons/`
+	statusReasons: `${version}statusReasons/`,
+	login: `${version}login/`,
+	status: `${version}login/status/`,
+	logout: `${version}logout/`,
+	register: `${version}register/`
 };

@@ -142,7 +142,7 @@ export default class LoginView extends JetView {
 				labelWidth: 150
 			},
 			rules: {
-				login: webix.rules.isEmail,
+				// login: webix.rules.isEmail,
 				pass: webix.rules.isNotEmpty
 			}
 		};
