@@ -250,7 +250,7 @@ export default class LoginView extends JetView {
 					name: "email",
 					label: "E-Mail Address",
 					labelAlign: "right",
-					invalidMessage: "The email has already been taken."
+					invalidMessage: "The email is not correct."
 				},
 				{
 					css: "login-button-container",
@@ -258,10 +258,15 @@ export default class LoginView extends JetView {
 						{
 							view: "button",
 							value: "Send Password Reset Link",
-							click: () => this.doResetPassword(),
 							hotkey: "enter",
 							css: "login__button",
-							autowidth: true
+							autowidth: true,
+							click: () => {
+								const resetForm = this.$$("resetPassForm");
+								if (resetForm.validate()) {
+									this.doResetPassword(resetForm);
+								}
+							}
 						}
 					]
 				}
@@ -363,8 +368,9 @@ export default class LoginView extends JetView {
 		this.createCookie(name, "", -1);
 	}
 
-	doResetPassword() {
-		
+	doResetPassword(form) {
+		const email = form.getValues().email;
+		webix.message({type: "success", text: `An e-mail has been sent to ${email} with futher instructions.`});
 	}
 
 	showElement(elemId) {
