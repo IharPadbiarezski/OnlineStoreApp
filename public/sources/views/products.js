@@ -91,7 +91,7 @@ export default class PhonesTable extends JetView {
 		};
 	}
 
-	init(view) {
+	urlChasnge(view) {
 		phones.waitData.then(() => {
 			view.sync(phones);
 			this.phoneInfo = this.ui(PhoneInfoWindow);
