@@ -13,7 +13,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
-	secret: "replace this string... k12jh40918e4019u3",
+	secret: "Hello World!",
 	resave: false,
 	saveUninitialized: true,
 	cookie: { maxAge: 60*60*1000 }
