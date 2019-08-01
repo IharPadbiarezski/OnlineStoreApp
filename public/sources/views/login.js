@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {urls} from "../config/urls";
+import Cookies from "./cookies/cookies";
 
 export default class LoginView extends JetView {
 	config() {
@@ -131,17 +132,17 @@ export default class LoginView extends JetView {
 									let nextYear = today.getFullYear() + 1;
 									let month = today.getMonth();
 									let date = today.getDate();
-									this.createCookie("email", values.email, Date.UTC(nextYear, month, date));
-									this.createCookie("password", values.password, Date.UTC(nextYear, month, date));
+									Cookies.createCookie("email", values.email, Date.UTC(nextYear, month, date));
+									Cookies.createCookie("password", values.password, Date.UTC(nextYear, month, date));
 								}
 								else {
-									const email = this.readCookie("email");
-									const password = this.readCookie("password");
+									const email = Cookies.readCookie("email");
+									const password = Cookies.readCookie("password");
 									if (email) {
-										this.deleteCookie("email");
+										Cookies.deleteCookie("email");
 									}
 									if (password) {
-										this.deleteCookie("password");
+										Cookies.deleteCookie("password");
 									}
 								}
 							}
@@ -319,8 +320,8 @@ export default class LoginView extends JetView {
 
 	setValuesIntoForm() {
 		const form = this.$$("loginForm");
-		const email = this.readCookie("email");
-		const password = this.readCookie("password");
+		const email = Cookies.readCookie("email");
+		const password = Cookies.readCookie("password");
 		const remember = "Yes";
 		if (email && password) {
 			const values = {email, password, remember};
@@ -339,33 +340,15 @@ export default class LoginView extends JetView {
 				webix.delay(() => {
 					webix.html.addCss(ui.$view, "invalid_login");
 				});
+			}).then(() => {
+				const userName = user.getUser().name;
+				let today = new Date();
+				let nextYear = today.getFullYear() + 1;
+				let month = today.getMonth();
+				let date = today.getDate();
+				Cookies.createCookie("userName", userName, Date.UTC(nextYear, month, date));
 			});
 		}
-	}
-
-	createCookie(key, value, date) {
-		let expiration = new Date(date).toUTCString();
-		let cookie = `${escape(key)}=${escape(value)};expires=${expiration};`;
-		document.cookie = cookie;
-	}
-
-	readCookie(name) {
-		let key = `${name}=`;
-		let cookies = document.cookie.split(";");
-		for (let i = 0; i < cookies.length; i++) {
-			let cookie = cookies[i];
-			while (cookie.charAt(0) === " ") {
-				cookie = cookie.substring(1, cookie.length);
-			}
-			if (cookie.indexOf(key) === 0) {
-				return cookie.substring(key.length, cookie.length);
-			}
-		}
-		return null;
-	}
-
-	deleteCookie(name) {
-		this.createCookie(name, "", -1);
 	}
 
 	doResetPassword(form) {
@@ -373,7 +356,6 @@ export default class LoginView extends JetView {
 		const email = values.email;
 		webix.ajax().post(urls.resetPassword, values);
 		webix.message({type: "success", text: `An e-mail has been sent to ${email} with futher instructions.`});
-
 	}
 
 	showElement(elemId) {

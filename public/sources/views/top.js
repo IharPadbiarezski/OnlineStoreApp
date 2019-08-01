@@ -1,4 +1,5 @@
 import {JetView} from "webix-jet";
+import Cookies from "./cookies/cookies";
 
 export default class TopView extends JetView {
 	config() {
@@ -15,7 +16,7 @@ export default class TopView extends JetView {
 				{},
 				{
 					view: "label",
-					label: "Hi, varias!",
+					localId: "userGreeting",
 					css: "toolbar__element"
 				},
 				{},
@@ -27,6 +28,7 @@ export default class TopView extends JetView {
 							label: "Logout",
 							click: () => {
 								this.show("/logout");
+								Cookies.deleteCookie("userName");
 							}
 						},
 						{
@@ -76,5 +78,8 @@ export default class TopView extends JetView {
 			}
 			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
+
+		const userName = Cookies.readCookie("userName");
+		this.$$("userGreeting").setValue(`Hi, ${userName}`);
 	}
 }

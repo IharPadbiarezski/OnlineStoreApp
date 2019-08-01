@@ -81,8 +81,8 @@ exports.resetPassword = (req, res) => {
                 let transporter = nodemailer.createTransport({
                     service: "Gmail",
                     auth: {
-                        user: "ipadbiarezski@gmail.com",
-                        pass: "Drakula1993"
+                        user: "YOUR.MAIL",
+                        pass: "YOUR.PASSWORD"
                   }
                 });
                 let token;
