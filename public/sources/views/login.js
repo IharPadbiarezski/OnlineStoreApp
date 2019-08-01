@@ -369,8 +369,11 @@ export default class LoginView extends JetView {
 	}
 
 	doResetPassword(form) {
-		const email = form.getValues().email;
+		const values = form.getValues();
+		const email = values.email;
+		webix.ajax().post(urls.resetPassword, values);
 		webix.message({type: "success", text: `An e-mail has been sent to ${email} with futher instructions.`});
+
 	}
 
 	showElement(elemId) {

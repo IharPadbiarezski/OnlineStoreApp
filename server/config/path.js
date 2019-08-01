@@ -14,5 +14,6 @@ module.exports = {
 	login: `${version}login/`,
 	status: `${version}login/status/`,
 	logout: `${version}logout/`,
-	register: `${version}register/`
+	register: `${version}register/`,
+	resetPassword: `${version}resetPassword/`,
 };

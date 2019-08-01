@@ -13,5 +13,6 @@ export const urls = {
 	phoneModels: `${mainUrl}phoneModels`,
 	phones: `${mainUrl}phones`,
 	statuses: `${mainUrl}statuses`,
-	statusReasons: `${mainUrl}statusReasons`
+	statusReasons: `${mainUrl}statusReasons`,
+	resetPassword: `${mainUrl}resetPassword`
 };
