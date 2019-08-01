@@ -27,5 +27,6 @@ export default class AdminView extends JetView {
 
 	init() {
 		this.use(plugins.Menu, "menu");
+		this.show("clientsinfo");
 	}
 }

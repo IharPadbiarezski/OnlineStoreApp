@@ -9,9 +9,8 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top/store",
-			access: "customers"
-			// access: "admin"
+			start: "/top"
+			// access: "customers"
 		};
 
 		super({...defaults, ...config});
@@ -28,4 +27,6 @@ if (!BUILD_AS_MODULE) {
 			webix.delay(() => app.show("/top/login"));
 		});
 	});
+
+
 }

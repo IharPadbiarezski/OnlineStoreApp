@@ -1,5 +1,7 @@
 import {JetView} from "webix-jet";
 import Cookies from "./cookies/cookies";
+import AdminView from "./admin";
+import StoreAllView from "./store";
 
 export default class TopView extends JetView {
 	config() {
@@ -59,18 +61,20 @@ export default class TopView extends JetView {
 			css: "app_layout",
 			rows: [
 				toolBar,
-				{$subview: true}
+				// {$subview: true}
+				this.app.config.access === "admin" ? AdminView : StoreAllView
 			]
 		};
+		// if (this.app.config.access === "admin") {
+		// 	// this.show("admin/clientsinfo");
+		// 	console.log("hi")
+		// 	ui.rows.push(AdminView);
+		// }
 
 		return ui;
 	}
 
 	init() {
-		if (this.app.config.access === "admin") {
-			this.show("admin/clientsinfo");
-		}
-
 		this.on(this.app, "bag:setvalue", (value) => {
 			let amountBag = `(${value})`;
 			if (!value || value === 0) {
@@ -79,7 +83,13 @@ export default class TopView extends JetView {
 			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
 
-		const userName = Cookies.readCookie("userName");
-		this.$$("userGreeting").setValue(`Hi, ${userName}`);
+		setTimeout(() => {
+			const userName = Cookies.readCookie("userName");
+			this.setGreeting(userName);
+		}, 500);
+	}
+
+	setGreeting(name) {
+		this.$$("userGreeting").setValue(`Hi, ${name}`);
 	}
 }
