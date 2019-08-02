@@ -33,19 +33,30 @@ exports.findById = (req, res) => {
 };
 
 exports.create = (req, res) => {
+    const modelName = req.body.value;
 	const phoneModel = {
-		value: req.body.value
+		value: modelName
     };
-    
-	PhoneModels.create(phoneModel, (err, result) => {
-		if (err) {
-            res.send({error: "An error has occured"});
+    const query = {value: modelName};
+    PhoneModels.findOne(query, (err, item) => {
+        if (err) {
+             res.send({error: "An error has occured"});
+        }
+        else if (item) {
+            res.send({error: "The model exists!"});
         }
         else {
-            result.ops[0].id = result.insertedId;
-            res.send(result.ops[0]);
+            PhoneModels.create(phoneModel, (err, result) => {
+                if (err) {
+                    res.send({error: "An error has occured"});
+                }
+                else {
+                    result.ops[0].id = result.insertedId;
+                    res.send(result.ops[0]);
+                }
+            });
         }
-	});
+    });
 };
 
 exports.update = (req, res) => {

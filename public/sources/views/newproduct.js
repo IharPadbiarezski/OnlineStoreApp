@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {phones} from "../models/phones";
+import {phoneModels} from "../models/phoneModels";
 
 export default class LoginForm extends JetView {
 	config() {
@@ -81,12 +82,10 @@ export default class LoginForm extends JetView {
 							click: () => {
 								if (this.getRoot().validate()) {
 									const values = this.getRoot().getValues();
-									values.amount = 0;
-									values.rating = 0;
-									values.image = this.$$("picture").getValues().picture;
-									phones.add(values);
+									this.createProduct(values);
 									this.getRoot().clear();
 									this.$$("picture").setValues({picture: ""});
+									this.addModel(values);
 								}
 							}
 						},
@@ -105,5 +104,20 @@ export default class LoginForm extends JetView {
 		};
 
 		return form;
+	}
+
+	createProduct(values) {
+		values.amount = 0;
+		values.rating = 0;
+		values.image = this.$$("picture").getValues().picture;
+		phones.add(values);
+	}
+
+	addModel(value) {
+		if (value.name) {
+			const modelName = value.name.split(" ")[0];
+			const model = {value: modelName};
+			phoneModels.add(model);
+		}
 	}
 }

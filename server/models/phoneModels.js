@@ -32,3 +32,10 @@ exports.delete = (id, cb) => {
 		}
 	);
 }
+
+exports.findOne = (searchField, cb) => {
+	db.get().collection("phoneModels").findOne(searchField, (err, item) => {
+			cb(err, item);
+		}
+	);
+}
