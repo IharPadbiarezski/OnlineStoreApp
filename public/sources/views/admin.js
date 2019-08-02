@@ -8,6 +8,7 @@ export default class AdminView extends JetView {
 			width: 250,
 			layout: "y",
 			select: true,
+			css: "admin__menu",
 			data: [
 				{value: "Clients Info", id: "clientsinfo"},
 				{value: "Orders", id: "orders"},

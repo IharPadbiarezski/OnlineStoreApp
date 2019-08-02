@@ -11,7 +11,7 @@ export default class ClientsInfoView extends JetView {
 			editaction: "dblclick",
 			columns: [
 				{
-					id: "id",
+					id: "customId",
 					header: "#"
 				},
 				{

@@ -6,8 +6,11 @@ exports.all = (req, res) => {
             res.send({error: "An error has occured"});
         }
         else {
+            let customId = 0;
             items.forEach((item) => {
                 item.id = item._id;
+                customId += 1;
+                item.customId = customId;
             });
             res.send(items);
         }

@@ -9,8 +9,8 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top"
-			// access: "customers"
+			start: "/top",
+			access: "admin"
 		};
 
 		super({...defaults, ...config});

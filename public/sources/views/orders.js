@@ -13,9 +13,9 @@ export default class ClientsInfoView extends JetView {
 			rowHeight: 60,
 			columns: [
 				{
-					id: "id",
+					id: "customId",
 					header: "#",
-					width: 20
+					width: 40
 				},
 				{
 					id: "Product",
