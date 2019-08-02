@@ -18,7 +18,9 @@ export default class StoreAllView extends JetView {
 							this.show("products");
 							const phoneName = this.$$("tree").getItem(id).value.toLowerCase();
 							if (phoneName !== "phones") {
-								phones.data.filter(item => item.name.toLowerCase().includes(phoneName));
+								phones.waitData.then(() => {
+									phones.data.filter(item => item.name.toLowerCase().includes(phoneName));
+								});
 							}
 							else {
 								phones.data.filter();
