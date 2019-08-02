@@ -13,7 +13,7 @@ export default class TopView extends JetView {
 				{
 					view: "label",
 					label: "Varin Shop",
-					css: "toolbar__element"
+					css: "toolbar__element header__logo"
 				},
 				{},
 				{

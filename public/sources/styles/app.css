@@ -215,6 +215,10 @@
     color: white;
 }
 
+.header__logo {
+    padding-left: 20px;
+}
+
 /* Animation for the LOGIN form */
 
 .webixappstart{

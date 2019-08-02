@@ -12,7 +12,7 @@ export default class LoginView extends JetView {
 				{
 					view: "label",
 					label: "Varin Shop",
-					css: "toolbar-login__element"
+					css: "toolbar-login__element  header__logo"
 				},
 				{},
 				{
