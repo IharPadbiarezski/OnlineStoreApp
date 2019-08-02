@@ -190,8 +190,7 @@ export default class LoginView extends JetView {
 					view: "text",
 					name: "email",
 					label: "E-Mail Address",
-					labelAlign: "right",
-					invalidMessage: "The email has already been taken."
+					labelAlign: "right"
 				},
 				{
 					view: "text",
@@ -218,7 +217,9 @@ export default class LoginView extends JetView {
 							css: "login__button",
 							autowidth: true,
 							click: () => {
-								if (this.$$("registerForm").validate()) {
+								const form = this.$$("registerForm");
+								form.clearValidation();
+								if (form.validate()) {
 									this.doRegister();
 								}
 							}
@@ -231,7 +232,6 @@ export default class LoginView extends JetView {
 			},
 			rules: {
 				name: webix.rules.isNotEmpty,
-				email: webix.rules.isEmail,
 				password: (value) => {
 					const passwordConf = this.$$("registerForm").getValues().passwordConf;
 					return value === passwordConf && value.length > 0;
@@ -250,8 +250,7 @@ export default class LoginView extends JetView {
 					view: "text",
 					name: "email",
 					label: "E-Mail Address",
-					labelAlign: "right",
-					invalidMessage: "The email is not correct."
+					labelAlign: "right"
 				},
 				{
 					css: "login-button-container",
@@ -264,9 +263,7 @@ export default class LoginView extends JetView {
 							autowidth: true,
 							click: () => {
 								const resetForm = this.$$("resetPassForm");
-								if (resetForm.validate()) {
-									this.doResetPassword(resetForm);
-								}
+								this.doResetPassword(resetForm);
 							}
 						}
 					]
@@ -274,9 +271,6 @@ export default class LoginView extends JetView {
 			],
 			elementsConfig: {
 				labelWidth: 150
-			},
-			rules: {
-				email: webix.rules.isEmail
 			}
 		};
 
@@ -353,9 +347,31 @@ export default class LoginView extends JetView {
 
 	doResetPassword(form) {
 		const values = form.getValues();
-		const email = values.email;
-		webix.ajax().post(urls.resetPassword, values);
-		webix.message({type: "success", text: `An e-mail has been sent to ${email} with futher instructions.`});
+		webix.ajax().post(urls.resetPassword, values, (response) => {
+			const parsedResponse = JSON.parse(response);
+			const success = parsedResponse.success;
+			const error = parsedResponse.error;
+			if (success) {
+				webix.message({type: "success", text: `${success}`});
+				form.clearValidation();
+				form.clear();
+				if (this.$$("registerForm")) {
+					this.hideElement("registerForm");
+					this.hideElement("registerHeader");
+					this.showElement("loginForm");
+					this.showElement("loginHeader");
+				}
+				if (this.$$("resetPassForm")) {
+					this.hideElement("resetPassForm");
+					this.hideElement("resetPassHeader");
+					this.showElement("loginForm");
+					this.showElement("loginHeader");
+				}
+			}
+			if (error) {
+				this.$$("resetPassForm").markInvalid("email", error);
+			}
+		});
 	}
 
 	showElement(elemId) {
@@ -371,16 +387,22 @@ export default class LoginView extends JetView {
 	doRegister() {
 		const values = this.$$("registerForm").getValues();
 		values.date = new Date();
-		webix.ajax().post(urls.register, values).then(() => {
-			const user = this.app.getService("user");
-			user.login(values.email, values.password).then(() => {
-				const userName = user.getUser().name;
-				let today = new Date();
-				let nextYear = today.getFullYear() + 1;
-				let month = today.getMonth();
-				let date = today.getDate();
-				Cookies.createCookie("userName", userName, Date.UTC(nextYear, month, date));
-			});
+		webix.ajax().post(urls.register, values, (response) => {
+			if (!JSON.parse(response).error) {
+				const user = this.app.getService("user");
+				user.login(values.email, values.password).then(() => {
+					const userName = user.getUser().name;
+					let today = new Date();
+					let nextYear = today.getFullYear() + 1;
+					let month = today.getMonth();
+					let date = today.getDate();
+					Cookies.createCookie("userName", userName, Date.UTC(nextYear, month, date));
+				});
+			}
+			else {
+				this.registerError = JSON.parse(response).error;
+				this.$$("registerForm").markInvalid("email", this.registerError);
+			}
 		});
 	}
 }
