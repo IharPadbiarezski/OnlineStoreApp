@@ -4,21 +4,24 @@ const nodemailer = require('nodemailer');
 const validator = require("email-validator");
 
 exports.login = (req, res) => {
-    const query = {Email: req.body.email}
+    const email = req.body.email
+    const query = {Email: email}
     Sessions.findOne(query, (err, item) => {
         const password = req.body.password;
-        const salt = item.Salt;
-        const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
-        if (err) {
-             res.send({error: "An error has occured"});
-        }
-        else if (hash === item.Password) {
-            const user = {
-                id: item._id,
-                name: item.Name
+        if (item) {
+            const salt = item.Salt;
+            const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
+            if (err) {
+                res.send({error: "An error has occured"});
             }
-            req.session.user = user;
-            res.send(user);
+            else if (hash === item.Password) {
+                const user = {
+                    id: item._id,
+                    name: item.Name
+                }
+                req.session.user = user;
+                res.send(user);
+            }
         }
         else {
             res.send(null);

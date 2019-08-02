@@ -94,7 +94,8 @@ export default class LoginView extends JetView {
 					view: "text",
 					name: "email",
 					label: "E-Mail Address",
-					labelAlign: "right"
+					labelAlign: "right",
+					invalidMessage: "Incorrect email!"
 				},
 				{
 					view: "text",
