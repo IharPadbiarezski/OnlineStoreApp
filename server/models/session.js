@@ -1,15 +1,15 @@
 const ObjectID = require("mongodb").ObjectID;
 const db = require("../config/db");
 
-exports.findOne = (searchField, cb) => {
-	db.get().collection("clients").findOne(searchField, (err, item) => {
+exports.findOne = (query, cb) => {
+	db.get().collection("clients").findOne(query, (err, item) => {
 			cb(err, item);
 		}
 	);
 }
 
-exports.find = (searchField, cb) => {
-	db.get().collection("clients").find(searchField, (err, item) => {
+exports.find = (query, cb) => {
+	db.get().collection("clients").find(query, (err, item) => {
 			cb(err, item);
 		}
 	);

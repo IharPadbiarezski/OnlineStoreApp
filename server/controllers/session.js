@@ -43,7 +43,7 @@ exports.register = (req, res) => {
             Name: req.body.name
         }
     ];
-    Sessions.find({$or:query}, (err, item) => {
+    Sessions.findOne({$or:query}, (err, item) => {
         if (err) {
              res.send({error: "An error has occured"});
         }
@@ -54,14 +54,14 @@ exports.register = (req, res) => {
             const password = req.body.password;
             const salt = crypto.randomBytes(16).toString('hex');
             const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
-            const user = {
+            const client = {
                 Name: req.body.name,
                 Email: req.body.email,
                 Password: hash,
                 CreationDate: req.body.date,
                 Salt: salt
             }
-            Sessions.create(user, (err, result) => {
+            Sessions.create(client, (err, result) => {
                 if (err) {
                     res.send({error: "An error has occured"});
                 }
@@ -128,3 +128,9 @@ exports.resetPassword = (req, res) => {
         }
     });
 }
+
+exports.findById = (id, cb) => {
+	db.get().collection("phones").findOne({_id: new ObjectID(id)}, (err, item) => {
+		cb(err, item);
+	});
+};

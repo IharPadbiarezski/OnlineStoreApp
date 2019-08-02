@@ -372,7 +372,15 @@ export default class LoginView extends JetView {
 		const values = this.$$("registerForm").getValues();
 		values.date = new Date();
 		webix.ajax().post(urls.register, values).then(() => {
-			// На страницу каталога переход здесь
+			const user = this.app.getService("user");
+			user.login(values.email, values.password).then(() => {
+				const userName = user.getUser().name;
+				let today = new Date();
+				let nextYear = today.getFullYear() + 1;
+				let month = today.getMonth();
+				let date = today.getDate();
+				Cookies.createCookie("userName", userName, Date.UTC(nextYear, month, date));
+			});
 		});
 	}
 }
