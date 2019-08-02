@@ -32,3 +32,9 @@ exports.delete = (id, cb) => {
 		}
 	);
 }
+
+exports.findMany = (query, cb) => {
+	db.get().collection("orders").findMany(query, (err, item) => {
+		cb(err, item);
+	});
+};

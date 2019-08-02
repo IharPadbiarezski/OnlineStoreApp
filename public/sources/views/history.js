@@ -5,6 +5,7 @@ import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
 import {reasons} from "../models/declineReasons";
 import {statuses} from "../models/statuses";
+import Cookies from "./cookies/cookies";
 
 export default class PhonesTable extends JetView {
 	config() {
@@ -40,7 +41,8 @@ export default class PhonesTable extends JetView {
 				{
 					id: "OrderDate",
 					header: "Order date",
-					width: 170
+					width: 170,
+					format: webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")
 				},
 				{
 					id: "Status",
@@ -70,6 +72,8 @@ export default class PhonesTable extends JetView {
 		orders.waitData.then(() => {
 			view.sync(orders);
 			this.declineReasons = this.ui(DeclineReasonsWindow);
+			const userName = Cookies.readCookie("userName");
+			orders.data.filter(item => item.ClientName === userName);
 		});
 	}
 }

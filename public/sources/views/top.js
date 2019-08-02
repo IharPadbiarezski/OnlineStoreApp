@@ -91,6 +91,6 @@ export default class TopView extends JetView {
 	}
 
 	setGreeting(name) {
-		this.$$("userGreeting").setValue(`Hi, ${name}`);
+		this.$$("userGreeting").setValue(`Hi, ${name}!`);
 	}
 }
