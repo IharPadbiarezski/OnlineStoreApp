@@ -60,17 +60,14 @@ export default class TopView extends JetView {
 			paddingX: 5,
 			css: "app_layout",
 			rows: [
-				toolBar,
-				// {$subview: true}
-				this.app.config.access === "admin" ? AdminView : StoreAllView
+				toolBar
 			]
 		};
-		// if (this.app.config.access === "admin") {
-		// 	// this.show("admin/clientsinfo");
-		// 	console.log("hi")
-		// 	ui.rows.push(AdminView);
-		// }
-
+		let view = StoreAllView;
+		if (this.app.config.access === "admin") {
+			view = AdminView;
+		}
+		ui.rows.push(view);
 		return ui;
 	}
 
@@ -83,10 +80,14 @@ export default class TopView extends JetView {
 			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
 
-		setTimeout(() => {
-			const userName = Cookies.readCookie("userName");
-			this.setGreeting(userName);
-		}, 500);
+		let promise = new Promise((resolve) => {
+			resolve(Cookies.readCookie("userName"));
+		});
+
+		promise
+			.then((result) => {
+				this.setGreeting(result);
+			});
 	}
 
 	setGreeting(name) {

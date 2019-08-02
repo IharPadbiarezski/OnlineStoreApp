@@ -1,6 +1,7 @@
 import {JetApp, EmptyRouter, HashRouter, plugins} from "webix-jet";
 import "./styles/app.css";
 import session from "./models/session";
+import Cookies from "./views/cookies/cookies";
 
 export default class MyApp extends JetApp {
 	constructor(config) {
@@ -10,7 +11,7 @@ export default class MyApp extends JetApp {
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
 			start: "/top",
-			access: "admin"
+			access: "customers"
 		};
 
 		super({...defaults, ...config});
@@ -22,7 +23,18 @@ export default class MyApp extends JetApp {
 if (!BUILD_AS_MODULE) {
 	webix.ready(() => {
 		let app = new MyApp();
-		app.render();
+		let promise = new Promise((resolve) => {
+			resolve(Cookies.readCookie("userName"));
+		});
+		promise
+			.then((result) => {
+				// let view = StoreAllView;
+				if (result === "admin") {
+					app.config.access = "admin";
+					// view = AdminView;
+				}
+				app.render();
+			});
 		app.attachEvent("app:error:resolve", () => {
 			webix.delay(() => app.show("/top/login"));
 		});
