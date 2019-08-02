@@ -67,7 +67,6 @@ export default class StatusWindow extends JetView {
 					css: "save-status__button",
 					click: () => {
 						const values = this.$$("form").getValues();
-						orders.updateItem(values.id, values);
 						if (this.status === "declined") {
 							const reason = {
 								OrderId: values.id,
@@ -83,12 +82,14 @@ export default class StatusWindow extends JetView {
 						else if (this.status !== "declined") {
 							if (values.ReasonId) {
 								reasons.remove(values.ReasonId);
-								values.ReasonId = "";
-								values.DeclinedReason = "";
+								this.app.callEvent("orderstable:refresh");
+
 							}
 						}
-						this.hideWindow();
+						this.$$("form").refresh();
 						this.$$("form").clear();
+						orders.updateItem(values.id, values);
+						this.hideWindow();
 					}
 				}
 			],
@@ -114,7 +115,7 @@ export default class StatusWindow extends JetView {
 
 	showWindow(values) {
 		reasons.waitData.then(() => {
-			const statusReason = reasons.find(reason => +reason.OrderId === +values.id);
+			const statusReason = reasons.data.find(reason => reason.OrderId === values.id);
 			if (statusReason.length > 0) {
 				values.DeclinedReason = statusReason[0].Reason;
 				if (statusReason[0].id) {

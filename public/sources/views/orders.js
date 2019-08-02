@@ -9,6 +9,7 @@ export default class ClientsInfoView extends JetView {
 	config() {
 		return {
 			view: "datatable",
+			localId: "ordersTable",
 			scroll: true,
 			rowHeight: 60,
 			columns: [
@@ -81,6 +82,10 @@ export default class ClientsInfoView extends JetView {
 	init(view) {
 		view.sync(orders);
 		this.statusWindow = this.ui(StatusWindow);
+
+		this.on(this.app, "orderstable:refresh", () => {
+			this.$$("ordersTable");
+		});
 	}
 }
 
