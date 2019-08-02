@@ -35,13 +35,20 @@ exports.logout = (req, res) => {
 }
 
 exports.register = (req, res) => {
-    const query = {Email: req.body.email}
-    Sessions.findOne(query, (err, item) => {
+    const query = [
+        {
+            Email: req.body.email
+        },
+        {
+            Name: req.body.name
+        }
+    ];
+    Sessions.find({$or:query}, (err, item) => {
         if (err) {
              res.send({error: "An error has occured"});
         }
         else if (item) {
-            res.send({error: "The email has already been taken"});
+            res.send({error: "The email or the name has already been taken"});
         }
         else {
             const password = req.body.password;

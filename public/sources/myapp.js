@@ -28,10 +28,8 @@ if (!BUILD_AS_MODULE) {
 		});
 		promise
 			.then((result) => {
-				// let view = StoreAllView;
 				if (result === "admin") {
 					app.config.access = "admin";
-					// view = AdminView;
 				}
 				app.render();
 			});

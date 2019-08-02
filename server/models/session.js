@@ -8,6 +8,13 @@ exports.findOne = (searchField, cb) => {
 	);
 }
 
+exports.find = (searchField, cb) => {
+	db.get().collection("clients").find(searchField, (err, item) => {
+			cb(err, item);
+		}
+	);
+}
+
 exports.create = (user, cb) => {
 	db.get().collection("clients").insertOne(user, (err, result) => {
 		cb(err, result);
