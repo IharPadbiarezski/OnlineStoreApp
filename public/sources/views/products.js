@@ -30,14 +30,7 @@ export default class PhonesTable extends JetView {
 					this.updateItem(id.row);
 				},
 				shoppingCart: (e, id) => {
-					const product = this.getRoot().getItem(id);
-					const phone = {
-						amount: product.amount,
-						id: product.id,
-						name: product.name,
-						price: product.price,
-						rating: product.rating
-					};
+					const phone = this.getRoot().getItem(id);
 					if (phone.amount === 0) {
 						webix.message({type: "error", text: "Please, select at least one!"});
 					}
