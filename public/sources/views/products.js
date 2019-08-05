@@ -84,8 +84,10 @@ export default class PhonesTable extends JetView {
 			],
 			on: {
 				onItemDblClick: (id) => {
-					const values = this.getRoot().getItem(id);
-					this.phoneInfo.showWindow(values);
+					if (id.column !== "amount") {
+						const values = this.getRoot().getItem(id);
+						this.phoneInfo.showWindow(values);
+					}
 				}
 			}
 		};
