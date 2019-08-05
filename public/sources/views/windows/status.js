@@ -2,6 +2,7 @@ import {JetView} from "webix-jet";
 import {statuses} from "../../models/statuses";
 import {orders} from "../../models/orders";
 import {reasons} from "../../models/declineReasons";
+import {urls} from "../../config/urls";
 
 export default class StatusWindow extends JetView {
 	config() {
@@ -72,18 +73,24 @@ export default class StatusWindow extends JetView {
 								OrderId: values.id,
 								Reason: values.DeclinedReason
 							};
-							if (values.ReasonId) {
+							if (values.ReasonId && reasons.length > 0) {
 								reasons.updateItem(values.ReasonId, reason);
 							}
 							else {
 								reasons.add(reason);
+								reasons.waitSave(() => {
+									webix.ajax().post(`${urls.declineReasons}findreason`, reason, (response) => {
+										const createdReason = JSON.parse(response);
+										orders.updateItem(createdReason.OrderId, {ReasonId: createdReason.id});
+									});
+								});
 							}
 						}
 						else if (this.status !== "declined") {
 							if (values.ReasonId) {
+								orders.updateItem(values.id, {ReasonId: ""});
 								reasons.remove(values.ReasonId);
 								this.app.callEvent("orderstable:refresh");
-
 							}
 						}
 						this.$$("form").refresh();

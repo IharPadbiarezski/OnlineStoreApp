@@ -14,9 +14,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
 	secret: "Hello World!",
-	resave: false,
+	resave: true,
 	saveUninitialized: true,
-	cookie: { maxAge: 60*60*1000 }
+	cookie: { maxAge: 60*60*1000*24*7 }
 }));
 
 app.use(fileUpload());

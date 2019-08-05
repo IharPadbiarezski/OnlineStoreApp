@@ -41,7 +41,8 @@ exports.create = (req, res) => {
 		Amount: req.body.Amount,
 		OrderDate: req.body.OrderDate,
         Status: req.body.Status,
-        ClientName: req.body.ClientName
+        ClientName: req.body.ClientName,
+        ReasonId: req.body.ReasonId || ""
     };
     
 	Orders.create(order, (err, result) => {
@@ -67,7 +68,8 @@ exports.update = (req, res) => {
 		Product: req.body.Product,
 		Amount: req.body.Amount,
 		OrderDate: req.body.OrderDate,
-		Status: req.body.Status
+        Status: req.body.Status,
+        ReasonId: req.body.ReasonId
     };
 
 	Orders.update(id, order, (err) => {

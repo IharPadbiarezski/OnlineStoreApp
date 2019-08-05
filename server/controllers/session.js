@@ -17,7 +17,8 @@ exports.login = (req, res) => {
             else if (hash === item.Password) {
                 const user = {
                     id: item._id,
-                    name: item.Name
+                    name: item.Name,
+                    email
                 }
                 req.session.user = user;
                 res.send(user);

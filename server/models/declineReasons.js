@@ -20,7 +20,7 @@ exports.create = (reason, cb) => {
 };
 
 exports.update = (id, reason, cb) => {
-	db.get().collection("declineReasons").update({_id: new ObjectID(id)}, reason, (err) => {
+	db.get().collection("declineReasons").updateOne({_id: new ObjectID(id)}, reason, (err) => {
 			cb(err);
 		}
 	);
@@ -29,6 +29,13 @@ exports.update = (id, reason, cb) => {
 exports.delete = (id, cb) => {
 	db.get().collection("declineReasons").deleteOne({_id: ObjectID(id)}, (err) => {
 			cb(err);
+		}
+	);
+}
+
+exports.findOne = (query, cb) => {
+	db.get().collection("declineReasons").findOne(query, (err, item) => {
+			cb(err, item);
 		}
 	);
 }

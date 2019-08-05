@@ -69,3 +69,23 @@ exports.delete = (req, res) => {
         }
 	});
 };
+
+exports.findOne = (req, res) => {    
+    const query = [
+        {
+            OrderId: req.body.OrderId,
+        },
+        {
+            Reason: req.body.Reason
+        }
+    ];
+    DeclineReasons.findOne({$or:query}, (err, item) => {
+            if (err) {
+                 res.send({error: "An error has occured"});
+            }
+            else if (item) {
+                item.id = item._id;
+                res.send(item);
+            }
+    });
+}
