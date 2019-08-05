@@ -36,6 +36,7 @@ export default class TopView extends JetView {
 						{
 							view: "button",
 							css: "webix_transparent toolbar__element",
+							localId: "history",
 							label: "History",
 							click: () => {
 								this.app.callEvent("screen:show", ["history"]);
@@ -72,6 +73,11 @@ export default class TopView extends JetView {
 	}
 
 	init() {
+		if (this.app.config.access && this.app.config.access === "admin") {
+			this.$$("bag").hide();
+			this.$$("history").hide();
+		}
+
 		this.on(this.app, "bag:setvalue", (value) => {
 			let amountBag = `(${value})`;
 			if (!value || value === 0) {
