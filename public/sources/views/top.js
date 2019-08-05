@@ -1,5 +1,4 @@
 import {JetView} from "webix-jet";
-import Cookies from "./cookies/cookies";
 import AdminView from "./admin";
 import StoreAllView from "./store";
 
@@ -30,7 +29,6 @@ export default class TopView extends JetView {
 							label: "Logout",
 							click: () => {
 								this.show("/logout");
-								Cookies.deleteCookie("userName");
 							}
 						},
 						{
@@ -64,8 +62,10 @@ export default class TopView extends JetView {
 				toolBar
 			]
 		};
+		const user = this.app.getService("user");
+		this.userName = user.getUser().name;
 		let view = StoreAllView;
-		if (this.app.config.access === "admin") {
+		if (this.userName === "admin") {
 			view = AdminView;
 		}
 		ui.rows.push(view);
@@ -73,7 +73,7 @@ export default class TopView extends JetView {
 	}
 
 	init() {
-		if (this.app.config.access && this.app.config.access === "admin") {
+		if (this.userName === "admin") {
 			this.$$("bag").hide();
 			this.$$("history").hide();
 		}

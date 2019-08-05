@@ -3,7 +3,6 @@ import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
 import Storage from "./localStorage/localStorage";
 import {orders} from "../models/orders";
-import Cookies from "./cookies/cookies";
 
 export default class ContactForm extends JetView {
 	config() {
@@ -73,7 +72,9 @@ export default class ContactForm extends JetView {
 							const values = this.getRoot().getValues();
 							const allPnonesLS = Storage.getPhonesFromStorage();
 							allPnonesLS.forEach((phone) => {
-								const clientName = Cookies.readCookie("userName");
+								const user = this.app.getService("user");
+								const userName = user.getUser().name;
+								const clientName = userName;
 								let order = {
 									Product: phone.name,
 									Name: values.Name,

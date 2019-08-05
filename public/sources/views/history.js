@@ -5,7 +5,6 @@ import {deliveryTypes} from "../models/deliveryTypes";
 import {paymentTypes} from "../models/paymentTypes";
 import {reasons} from "../models/declineReasons";
 import {statuses} from "../models/statuses";
-import Cookies from "./cookies/cookies";
 
 export default class PhonesTable extends JetView {
 	config() {
@@ -72,7 +71,8 @@ export default class PhonesTable extends JetView {
 		orders.waitData.then(() => {
 			view.sync(orders);
 			this.declineReasons = this.ui(DeclineReasonsWindow);
-			const userName = Cookies.readCookie("userName");
+			const user = this.app.getService("user");
+			const userName = user.getUser().name;
 			orders.data.filter(item => item.ClientName === userName);
 		});
 	}
