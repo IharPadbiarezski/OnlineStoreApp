@@ -75,27 +75,28 @@ export default class StatusWindow extends JetView {
 							};
 							if (values.ReasonId && reasons.length > 0) {
 								reasons.updateItem(values.ReasonId, reason);
+								orders.updateItem(values.id, values);
 							}
 							else {
 								reasons.add(reason);
 								reasons.waitSave(() => {
 									webix.ajax().post(`${urls.declineReasons}findreason`, reason, (response) => {
 										const createdReason = JSON.parse(response);
-										orders.updateItem(createdReason.OrderId, {ReasonId: createdReason.id});
+										values.ReasonId = createdReason.id;
+										orders.updateItem(createdReason.OrderId, values);
 									});
 								});
 							}
 						}
 						else if (this.status !== "declined") {
 							if (values.ReasonId) {
-								orders.updateItem(values.id, {ReasonId: ""});
 								reasons.remove(values.ReasonId);
+								values.ReasonId = "";
+								orders.updateItem(values.id, values);
 								this.app.callEvent("orderstable:refresh");
 							}
 						}
-						this.$$("form").refresh();
 						this.$$("form").clear();
-						orders.updateItem(values.id, values);
 						this.hideWindow();
 					}
 				}

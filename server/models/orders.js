@@ -13,14 +13,14 @@ exports.findById = (id, cb) => {
 	});
 };
 
-exports.create = (user, cb) => {
-	db.get().collection("orders").insertOne(user, (err, result) => {
+exports.create = (order, cb) => {
+	db.get().collection("orders").insertOne(order, (err, result) => {
 		cb(err, result);
 	});
 };
 
-exports.update = (id, user, cb) => {
-	db.get().collection("orders").updateOne({_id: new ObjectID(id)}, user, (err) => {
+exports.update = (id, order, cb) => {
+	db.get().collection("orders").update({_id: new ObjectID(id)}, order, (err) => {
 			cb(err);
 		}
 	);

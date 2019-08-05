@@ -48,7 +48,7 @@ export default class PhonesTable extends JetView {
 					id: "Status",
 					header: "Status",
 					css: "statusCell",
-					options: statuses
+					collection: statuses
 				}
 			],
 			onClick: {

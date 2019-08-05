@@ -398,8 +398,6 @@ export default class LoginView extends JetView {
 					let month = today.getMonth();
 					let date = today.getDate();
 					Cookies.createCookie("userName", userName, Date.UTC(nextYear, month, date));
-					const a = Cookies.readCookie("name");
-					console.log(a)
 				});
 			}
 			else {

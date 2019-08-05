@@ -20,7 +20,7 @@ exports.create = (reason, cb) => {
 };
 
 exports.update = (id, reason, cb) => {
-	db.get().collection("declineReasons").updateOne({_id: new ObjectID(id)}, reason, (err) => {
+	db.get().collection("declineReasons").update({_id: new ObjectID(id)}, reason, (err) => {
 			cb(err);
 		}
 	);

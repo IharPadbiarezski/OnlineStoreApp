@@ -20,7 +20,7 @@ exports.create = (status, cb) => {
 };
 
 exports.update = (id, status, cb) => {
-	db.get().collection("statuses").update({_id: new ObjectID(id)}, status, (err) => {
+	db.get().collection("statuses").updateOne({_id: new ObjectID(id)}, status, (err) => {
 			cb(err);
 		}
 	);

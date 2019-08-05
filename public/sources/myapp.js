@@ -32,10 +32,10 @@ if (!BUILD_AS_MODULE) {
 					app.config.access = "admin";
 				}
 				app.render();
+				app.attachEvent("app:error:resolve", () => {
+					webix.delay(() => app.show("/top/login"));
+				});
 			});
-		app.attachEvent("app:error:resolve", () => {
-			webix.delay(() => app.show("/top/login"));
-		});
 	});
 
 
