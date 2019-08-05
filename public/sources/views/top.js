@@ -85,15 +85,9 @@ export default class TopView extends JetView {
 			}
 			this.$$("bag").setValue(`Bag${amountBag}`);
 		});
-
-		let promise = new Promise((resolve) => {
-			resolve(Cookies.readCookie("userName"));
-		});
-
-		promise
-			.then((result) => {
-				this.setGreeting(result);
-			});
+		const user = this.app.getService("user");
+		const userName = user.getUser().name;
+		this.setGreeting(userName);
 	}
 
 	setGreeting(name) {
