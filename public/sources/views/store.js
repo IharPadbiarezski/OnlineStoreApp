@@ -39,7 +39,9 @@ export default class StoreAllView extends JetView {
 	}
 
 	init() {
-		this.$$("tree").sync(phoneModels);
+		phoneModels.waitData.then(() => {
+			this.$$("tree").sync(phoneModels);
+		});
 
 		this.show("products");
 

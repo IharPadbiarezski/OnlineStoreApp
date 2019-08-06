@@ -8,7 +8,6 @@ exports.all = (req, res) => {
         else {
             let id = 1;
             items.forEach((item) => {
-                // item.id = item._id;
                 id += 0.1;
                 item.id = Math.round(id * 100) / 100;
             });

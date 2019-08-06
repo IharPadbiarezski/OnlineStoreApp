@@ -166,10 +166,6 @@ export default class LoginView extends JetView {
 			],
 			elementsConfig: {
 				labelWidth: 150
-			},
-			rules: {
-				email: webix.rules.isEmail,
-				password: webix.rules.isNotEmpty
 			}
 		};
 

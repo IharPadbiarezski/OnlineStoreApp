@@ -21,6 +21,12 @@ exports.login = (req, res) => {
                     email
                 }
                 req.session.user = user;
+//                 // Cookies that have not been signed
+//   console.log('Cookies: ', req.cookies)
+
+//   // Cookies that have been signed
+//   console.log('Signed Cookies: ', req.signedCookies)
+console.log(req.cookies)
                 res.send(user);
             }
         }
