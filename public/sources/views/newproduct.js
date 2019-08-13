@@ -3,7 +3,6 @@ import {phones} from "../models/phones";
 import {phoneModels} from "../models/phoneModels";
 
 export default class LoginForm extends JetView {
-
 	get pictureId() {
 		return "picture";
 	}

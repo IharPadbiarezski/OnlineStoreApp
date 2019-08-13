@@ -78,7 +78,7 @@ export default class PhonesTable extends JetView {
 					template: "Total:"
 				},
 				{
-					localId: "totalSumTemplate",
+					localId: this.templateId,
 					template: obj => obj.sum,
 					width: 100
 				},
