@@ -5,19 +5,20 @@ const db = require("./config/db");
 const cors = require("cors");
 
 const app = express();
-
+app.use(express.static("public"));
 const port = 3000;
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(require('express-session')({
-	secret: 'This is a secret',
+app.use(require("express-session")({
+	secret: "This is a secret",
 	cookie: {
-	  maxAge: 1000 * 60 * 60 * 24 * 7
+		maxAge: 1000 * 60 * 60 * 24 * 7
 	},
 	store: db.getStore(),
-	resave: false,
-	saveUninitialized: true
+	resave: true,
+	saveUninitialized: false,
+	httpOnly: false
 }));
 
 app.use(cors());

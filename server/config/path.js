@@ -1,5 +1,4 @@
 let version = "/api/v1/";
-let rootFolder = "/Dev/Projects/OnlineStoreApp/files/"
 
 module.exports = {
 	statuses: `${version}statuses/`,
@@ -11,9 +10,9 @@ module.exports = {
 	phoneModels: `${version}phoneModels/`,
 	phones: `${version}phones/`,
 	statusReasons: `${version}statusReasons/`,
-	login: `${version}login/`,
-	status: `${version}login/status/`,
-	logout: `${version}logout/`,
-	register: `${version}register/`,
-	resetPassword: `${version}resetPassword/`,
+	login: `${version}login`,
+	status: `${version}login/status`,
+	logout: `${version}logout`,
+	register: `${version}register`,
+	resetPassword: `${version}resetPassword`,
 };

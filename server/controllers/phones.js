@@ -1,4 +1,4 @@
-const Phones = require('../models/phones');
+const Phones = require("../models/phones");
 
 exports.all = (req, res) => {
     Phones.all((err, items) => {

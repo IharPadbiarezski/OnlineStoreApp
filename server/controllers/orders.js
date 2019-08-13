@@ -1,4 +1,4 @@
-const Orders = require('../models/orders');
+const Orders = require("../models/orders");
 
 exports.all = (req, res) => {
     Orders.all((err, items) => {

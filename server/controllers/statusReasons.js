@@ -1,4 +1,4 @@
-const StatusReasons = require('../models/statusReasons');
+const StatusReasons = require("../models/statusReasons");
 
 exports.all = (req, res) => {
     StatusReasons.all((err, items) => {

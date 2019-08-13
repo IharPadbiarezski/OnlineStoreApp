@@ -1,4 +1,4 @@
-const Clients = require('../models/clients');
+const Clients = require("../models/clients");
 
 exports.all = (req, res) => {
     Clients.all((err, items) => {

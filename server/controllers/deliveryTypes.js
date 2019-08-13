@@ -1,4 +1,4 @@
-const DeliveryTypes = require('../models/deliveryTypes');
+const DeliveryTypes = require("../models/deliveryTypes");
 
 exports.all = (req, res) => {
     DeliveryTypes.all((err, items) => {

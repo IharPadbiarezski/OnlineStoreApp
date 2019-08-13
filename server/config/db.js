@@ -1,6 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 const session = require("express-session");
-const MongoDBStore = require('connect-mongodb-session')(session);
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 let state = {
 	db: null,
@@ -25,10 +25,10 @@ exports.get = () => state.db;
 
 const store = new MongoDBStore({
 	uri: state.uri,
-	collection: 'mySessions'
+	collection: "mySessions"
 });
 
-store.on('error', function(error) {
+store.on("error", function(error) {
 	console.log(error);
 });
 

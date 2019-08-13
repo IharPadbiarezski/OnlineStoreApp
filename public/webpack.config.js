@@ -61,11 +61,11 @@ module.exports = function (env) {
 			})
 		],
 		devServer: {
-			stats: "errors-only"
-			// contentBase:"./",
-			// proxy:{
-			// 	"../server" : "http://localhost:3000"
-			// }
+			stats: "errors-only",
+			proxy: {
+				"/api" : "http://localhost:3000"
+			}
+
 		}
 	};
 

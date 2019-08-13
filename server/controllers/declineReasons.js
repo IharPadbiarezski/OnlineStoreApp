@@ -1,4 +1,4 @@
-const DeclineReasons = require('../models/declineReasons');
+const DeclineReasons = require("../models/declineReasons");
 
 exports.all = (req, res) => {
     DeclineReasons.all((err, items) => {

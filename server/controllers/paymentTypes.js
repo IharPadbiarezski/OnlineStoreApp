@@ -1,4 +1,4 @@
-const PaymentTypes = require('../models/paymentTypes');
+const PaymentTypes = require("../models/paymentTypes");
 
 exports.all = (req, res) => {
     PaymentTypes.all((err, items) => {
