@@ -1,10 +1,14 @@
 import {JetView} from "webix-jet";
 
 export default class LoginForm extends JetView {
+	get formId() {
+		return "loginForm";
+	}
+
 	config() {
 		const loginForm = {
 			view: "form",
-			localId: "loginForm",
+			localId: this.formId,
 			width: 600,
 			borderless: false,
 			margin: 10,
@@ -71,7 +75,7 @@ export default class LoginForm extends JetView {
 
 	doLogin() {
 		const user = this.app.getService("user");
-		const form = this.$$("loginForm");
+		const form = this.$$(`${this.formId}`);
 		const ui = this.$$("loginTop");
 
 		if (form.validate()) {

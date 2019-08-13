@@ -5,6 +5,14 @@ import {reasons} from "../../models/declineReasons";
 import {urls} from "../../config/urls";
 
 export default class StatusWindow extends JetView {
+	get formId() {
+		return "form";
+	}
+
+	get textareaId() {
+		return "statusReason";
+	}
+
 	config() {
 		const toolbar = {
 			view: "toolbar",
@@ -32,7 +40,7 @@ export default class StatusWindow extends JetView {
 
 		const form = {
 			view: "form",
-			localId: "form",
+			localId: this.formId,
 			rows: [
 				{
 					view: "combo",
@@ -44,10 +52,10 @@ export default class StatusWindow extends JetView {
 							if (newId) {
 								this.status = statuses.getItem(newId).value.toLowerCase();
 								if (this.status !== "declined") {
-									this.$$("statusReason").hide();
+									this.getTextArea().hide();
 								}
 								else {
-									this.$$("statusReason").show();
+									this.getTextArea().show();
 								}
 							}
 						}
@@ -67,7 +75,7 @@ export default class StatusWindow extends JetView {
 					hotkey: "enter",
 					css: "save-status__button",
 					click: () => {
-						const values = this.$$("form").getValues();
+						const values = this.getForm().getValues();
 						if (this.status === "declined") {
 							const reason = {
 								OrderId: values.id,
@@ -96,7 +104,7 @@ export default class StatusWindow extends JetView {
 								this.app.callEvent("orderstable:refresh");
 							}
 						}
-						this.$$("form").clear();
+						this.getForm().clear();
 						this.hideWindow();
 					}
 				}
@@ -121,6 +129,14 @@ export default class StatusWindow extends JetView {
 		};
 	}
 
+	getForm() {
+		return this.$$(`${this.formId}`);
+	}
+
+	getTextArea() {
+		return this.$$(`${this.textareaId}`);
+	}
+
 	showWindow(values) {
 		reasons.waitData.then(() => {
 			const statusReason = reasons.data.find(reason => reason.OrderId === values.id);
@@ -130,7 +146,7 @@ export default class StatusWindow extends JetView {
 					values.ReasonId = statusReason[0].id;
 				}
 			}
-			this.$$("form").setValues(values);
+			this.getForm().setValues(values);
 		});
 		this.getRoot().show();
 	}

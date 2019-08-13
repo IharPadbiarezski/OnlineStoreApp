@@ -3,10 +3,18 @@ import {getData} from "../models/phonesFromLS";
 import Storage from "./localStorage/localStorage";
 
 export default class PhonesTable extends JetView {
+	get datatableId() {
+		return "datatable";
+	}
+
+	get templateId() {
+		return "totalSumTemplate";
+	}
+
 	config() {
 		const datatable = {
 			view: "datatable",
-			localId: "datatable",
+			localId: this.datatableId,
 			scroll: true,
 			rowHeight: 60,
 			gravity: 3,
@@ -49,11 +57,11 @@ export default class PhonesTable extends JetView {
 						cancel: "Cancel"
 					}).then(() => {
 						if (id) {
-							const deletedPhoneSum = this.$$("datatable").getItem(id.row).sum;
+							const deletedPhoneSum = this.getDatatable().getItem(id.row).sum;
 							Storage.removePhoneLocalStorage(id.row);
-							this.$$("datatable").remove(id.row);
+							this.getDatatable().remove(id.row);
 							this.total.sum -= deletedPhoneSum;
-							this.$$("totalSumTemplate").setValues(this.total);
+							this.getTemplate().setValues(this.total);
 							let phonesTotalAmount = Storage.getTotalAmount();
 							this.app.callEvent("bag:setvalue", [phonesTotalAmount]);
 						}
@@ -116,8 +124,16 @@ export default class PhonesTable extends JetView {
 			phonesLS.forEach((phone) => {
 				this.total.sum += phone.sum;
 			});
-			this.$$("datatable").parse(phonesLS);
+			this.getDatatable().parse(phonesLS);
 		}
-		this.$$("totalSumTemplate").setValues(this.total);
+		this.getTemplate().setValues(this.total);
+	}
+
+	getDatatable() {
+		return this.$$(`${this.datatableId}`);
+	}
+
+	getTemplate() {
+		return this.$$(`${this.templateId}`);
 	}
 }

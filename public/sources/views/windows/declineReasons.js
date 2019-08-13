@@ -1,6 +1,10 @@
 import {JetView} from "webix-jet";
 
 export default class DeclineReasonsWindow extends JetView {
+	get templateId() {
+		return "template";
+	}
+
 	config() {
 		const toolbar = {
 			view: "toolbar",
@@ -27,7 +31,7 @@ export default class DeclineReasonsWindow extends JetView {
 		};
 
 		const template = {
-			localId: "template",
+			localId: this.templateId,
 			css: "decline-reason__template",
 			template: obj => obj.Reason
 		};
@@ -49,7 +53,7 @@ export default class DeclineReasonsWindow extends JetView {
 	}
 
 	showWindow(values) {
-		this.$$("template").setValues(values);
+		this.$$(`${this.templateId}`).setValues(values);
 		this.getRoot().show();
 	}
 

@@ -6,10 +6,14 @@ import {statuses} from "../models/statuses";
 import StatusWindow from "./windows/status";
 
 export default class ClientsInfoView extends JetView {
+	get datatableId() {
+		return "ordersTable";
+	}
+
 	config() {
 		return {
 			view: "datatable",
-			localId: "ordersTable",
+			localId: this.datatableId,
 			scroll: true,
 			rowHeight: 60,
 			columns: [
@@ -84,7 +88,7 @@ export default class ClientsInfoView extends JetView {
 		this.statusWindow = this.ui(StatusWindow);
 
 		this.on(this.app, "orderstable:refresh", () => {
-			this.$$("ordersTable");
+			this.$$(`${this.datatableId}`);
 		});
 	}
 }

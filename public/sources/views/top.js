@@ -3,6 +3,18 @@ import AdminView from "./admin";
 import StoreAllView from "./store";
 
 export default class TopView extends JetView {
+	get greetingId() {
+		return "userGreeting";
+	}
+
+	get historyButtonId() {
+		return "history";
+	}
+
+	get bagButtonId() {
+		return "bag";
+	}
+
 	config() {
 		const toolBar = {
 			view: "toolbar",
@@ -17,7 +29,7 @@ export default class TopView extends JetView {
 				{},
 				{
 					view: "label",
-					localId: "userGreeting",
+					localId: this.greetingId,
 					css: "toolbar__element"
 				},
 				{},
@@ -34,7 +46,7 @@ export default class TopView extends JetView {
 						{
 							view: "button",
 							css: "webix_transparent toolbar__element",
-							localId: "history",
+							localId: this.historyButtonId,
 							label: "History",
 							click: () => {
 								this.app.callEvent("screen:show", ["history"]);
@@ -74,8 +86,8 @@ export default class TopView extends JetView {
 
 	init() {
 		if (this.userName === "admin") {
-			this.$$("bag").hide();
-			this.$$("history").hide();
+			this.getBag().hide();
+			this.$$(`${this.historyButtonId}`).hide();
 		}
 
 		this.on(this.app, "bag:setvalue", (value) => {
@@ -83,14 +95,18 @@ export default class TopView extends JetView {
 			if (!value || value === 0) {
 				amountBag = "";
 			}
-			this.$$("bag").setValue(`Bag${amountBag}`);
+			this.getBag().setValue(`Bag${amountBag}`);
 		});
 		const user = this.app.getService("user");
 		const userName = user.getUser().name;
 		this.setGreeting(userName);
 	}
 
+	getBag() {
+		return this.$$(`${this.bagButtonId}`);
+	}
+
 	setGreeting(name) {
-		this.$$("userGreeting").setValue(`Hi, ${name}!`);
+		this.$$(`${this.greetingId}`).setValue(`Hi, ${name}!`);
 	}
 }
