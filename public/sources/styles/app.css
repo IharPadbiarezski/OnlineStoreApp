@@ -207,6 +207,17 @@
     display: block;
     margin: 0 auto;
 }
+.admin__menu .webix_list_item.webix_selected {
+    box-shadow: none;
+}
+.webix_menu.webix_view.admin__menu .webix_list_item.webix_selected {
+    background: green;
+    color: white;
+}
+
+.header__logo {
+    padding-left: 20px;
+}
 
 /* Animation for the LOGIN form */
 

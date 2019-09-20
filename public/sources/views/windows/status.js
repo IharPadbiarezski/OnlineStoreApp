@@ -2,8 +2,17 @@ import {JetView} from "webix-jet";
 import {statuses} from "../../models/statuses";
 import {orders} from "../../models/orders";
 import {reasons} from "../../models/declineReasons";
+import {urls} from "../../config/urls";
 
 export default class StatusWindow extends JetView {
+	get formId() {
+		return "form";
+	}
+
+	get textareaId() {
+		return "statusReason";
+	}
+
 	config() {
 		const toolbar = {
 			view: "toolbar",
@@ -31,7 +40,7 @@ export default class StatusWindow extends JetView {
 
 		const form = {
 			view: "form",
-			localId: "form",
+			localId: this.formId,
 			rows: [
 				{
 					view: "combo",
@@ -43,10 +52,10 @@ export default class StatusWindow extends JetView {
 							if (newId) {
 								this.status = statuses.getItem(newId).value.toLowerCase();
 								if (this.status !== "declined") {
-									this.$$("statusReason").hide();
+									this.getTextArea().hide();
 								}
 								else {
-									this.$$("statusReason").show();
+									this.getTextArea().show();
 								}
 							}
 						}
@@ -66,29 +75,37 @@ export default class StatusWindow extends JetView {
 					hotkey: "enter",
 					css: "save-status__button",
 					click: () => {
-						const values = this.$$("form").getValues();
-						orders.updateItem(values.id, values);
+						const values = this.getForm().getValues();
 						if (this.status === "declined") {
 							const reason = {
 								OrderId: values.id,
 								Reason: values.DeclinedReason
 							};
-							if (values.ReasonId) {
+							if (values.ReasonId && reasons.length > 0) {
 								reasons.updateItem(values.ReasonId, reason);
+								orders.updateItem(values.id, values);
 							}
 							else {
 								reasons.add(reason);
+								reasons.waitSave(() => {
+									webix.ajax().post(`${urls.declineReasons}findreason`, reason, (response) => {
+										const createdReason = JSON.parse(response);
+										values.ReasonId = createdReason.id;
+										orders.updateItem(createdReason.OrderId, values);
+									});
+								});
 							}
 						}
 						else if (this.status !== "declined") {
 							if (values.ReasonId) {
 								reasons.remove(values.ReasonId);
 								values.ReasonId = "";
-								values.DeclinedReason = "";
+								orders.updateItem(values.id, values);
+								this.app.callEvent("orderstable:refresh");
 							}
 						}
+						this.getForm().clear();
 						this.hideWindow();
-						this.$$("form").clear();
 					}
 				}
 			],
@@ -112,16 +129,24 @@ export default class StatusWindow extends JetView {
 		};
 	}
 
+	getForm() {
+		return this.$$(`${this.formId}`);
+	}
+
+	getTextArea() {
+		return this.$$(`${this.textareaId}`);
+	}
+
 	showWindow(values) {
 		reasons.waitData.then(() => {
-			const statusReason = reasons.find(reason => +reason.OrderId === +values.id);
+			const statusReason = reasons.data.find(reason => reason.OrderId === values.id);
 			if (statusReason.length > 0) {
 				values.DeclinedReason = statusReason[0].Reason;
 				if (statusReason[0].id) {
 					values.ReasonId = statusReason[0].id;
 				}
 			}
-			this.$$("form").setValues(values);
+			this.getForm().setValues(values);
 		});
 		this.getRoot().show();
 	}

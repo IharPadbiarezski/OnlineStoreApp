@@ -1,11 +1,15 @@
 import {JetView} from "webix-jet";
 import {phones} from "../models/phones";
+import {phoneModels} from "../models/phoneModels";
 
 export default class LoginForm extends JetView {
+	get pictureId() {
+		return "picture";
+	}
+
 	config() {
 		const form = {
 			view: "form",
-			localId: "form",
 			margin: 10,
 			cols: [
 				{
@@ -44,7 +48,7 @@ export default class LoginForm extends JetView {
 										let reader = new FileReader();
 										reader.onload = (event) => {
 											const phonePicture = event.target.result;
-											this.$$("picture").setValues({picture: phonePicture});
+											this.getPicture().setValues({picture: phonePicture});
 										};
 										reader.readAsDataURL(file);
 										return false;
@@ -55,7 +59,7 @@ export default class LoginForm extends JetView {
 						{
 							view: "template",
 							name: "phonePicture",
-							localId: "picture",
+							localId: this.pictureId,
 							css: "product__template",
 							height: 160,
 							template: (obj) => {
@@ -81,12 +85,10 @@ export default class LoginForm extends JetView {
 							click: () => {
 								if (this.getRoot().validate()) {
 									const values = this.getRoot().getValues();
-									values.amount = 0;
-									values.rating = 0;
-									values.image = this.$$("picture").getValues().picture;
-									phones.add(values);
+									this.createProduct(values);
 									this.getRoot().clear();
-									this.$$("picture").setValues({picture: ""});
+									this.getPicture().setValues({picture: ""});
+									this.addModel(values);
 								}
 							}
 						},
@@ -105,5 +107,24 @@ export default class LoginForm extends JetView {
 		};
 
 		return form;
+	}
+
+	getPicture() {
+		return this.$$(`${this.pictureId}`);
+	}
+
+	createProduct(values) {
+		values.amount = 0;
+		values.rating = 0;
+		values.image = this.getPicture().getValues().picture;
+		phones.add(values);
+	}
+
+	addModel(value) {
+		if (value.name) {
+			const modelName = value.name.split(" ")[0];
+			const model = {value: modelName};
+			phoneModels.add(model);
+		}
 	}
 }

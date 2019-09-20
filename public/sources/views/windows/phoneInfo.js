@@ -2,6 +2,14 @@ import {JetView} from "webix-jet";
 import {phones} from "../../models/phones";
 
 export default class PhoneInfoWindow extends JetView {
+	get labelId() {
+		return "label";
+	}
+
+	get templateId() {
+		return "template";
+	}
+
 	config() {
 		const toolbar = {
 			view: "toolbar",
@@ -10,7 +18,7 @@ export default class PhoneInfoWindow extends JetView {
 			elements: [
 				{
 					view: "label",
-					localId: "label",
+					localId: this.labelId,
 					css: "toolbar__element"
 				},
 				{},
@@ -28,7 +36,7 @@ export default class PhoneInfoWindow extends JetView {
 		};
 
 		const phoneTemplate = {
-			localId: "template",
+			localId: this.templateId,
 			template: obj => `
 			    <div class="phone-info-container">
 			        <div class="photo">
@@ -69,8 +77,8 @@ export default class PhoneInfoWindow extends JetView {
 
 	showWindow(values) {
 		this.phoneValues = values;
-		this.$$("label").setValue(values.name);
-		this.$$("template").setValues(values);
+		this.$$(`${this.labelId}`).setValue(values.name);
+		this.$$(`${this.templateId}`).setValues(values);
 		this.getRoot().show();
 	}
 

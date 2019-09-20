@@ -9,14 +9,16 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top/store",
+			start: "/top",
 			access: "customers"
-			// access: "admin"
 		};
 
 		super({...defaults, ...config});
 
-		// this.use(plugins.User, {model: session});
+		this.use(plugins.User, {
+			model: session,
+			public: path => path.indexOf("/login/signin") > -1 || path.indexOf("/login/register") > -1 || path.indexOf("/login/reset") > -1
+		});
 	}
 }
 

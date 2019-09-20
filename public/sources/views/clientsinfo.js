@@ -7,36 +7,27 @@ export default class ClientsInfoView extends JetView {
 			view: "datatable",
 			scroll: "y",
 			rowHeight: 60,
-			editable: true,
-			editaction: "dblclick",
 			columns: [
 				{
-					id: "id",
+					id: "customId",
 					header: "#"
 				},
 				{
 					id: "Name",
 					header: ["Name", {content: "textFilter"}],
-					fillspace: true,
-					editor: "text"
+					fillspace: true
 				},
 				{
 					id: "Email",
 					header: ["Email", {content: "textFilter"}],
-					fillspace: true,
-					editor: "text"
+					fillspace: true
 				},
 				{
 					id: "CreationDate",
 					header: "Created at",
-					width: 150,
-					editor: "date"
+					width: 150
 				}
-			],
-			rules: {
-				Name: webix.rules.isNotEmpty,
-				Email: webix.rules.isEmail
-			}
+			]
 		};
 	}
 

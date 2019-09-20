@@ -72,6 +72,9 @@ export default class ContactForm extends JetView {
 							const values = this.getRoot().getValues();
 							const allPnonesLS = Storage.getPhonesFromStorage();
 							allPnonesLS.forEach((phone) => {
+								const user = this.app.getService("user");
+								const userName = user.getUser().name;
+								const clientName = userName;
 								let order = {
 									Product: phone.name,
 									Name: values.Name,
@@ -81,8 +84,9 @@ export default class ContactForm extends JetView {
 									DeliveryAddress: values.DeliveryAddress,
 									DeliveryType: values.DeliveryType,
 									PaymentType: values.PaymentType,
-									Status: "1",
-									OrderDate: new Date()
+									Status: "5d3ee8cb3c98b2708cbc39cb",
+									OrderDate: new Date(),
+									ClientName: clientName
 								};
 								orders.add(order);
 							});

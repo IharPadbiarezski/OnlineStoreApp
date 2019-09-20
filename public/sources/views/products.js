@@ -37,7 +37,7 @@ export default class PhonesTable extends JetView {
 					else {
 						const phonesLS = Storage.getPhonesFromStorage();
 						phonesLS.forEach((phoneLS, index) => {
-							if (+phoneLS.id === +id) {
+							if (phoneLS.id === id.row) {
 								phonesLS.splice(index, 1);
 							}
 						});
@@ -84,8 +84,10 @@ export default class PhonesTable extends JetView {
 			],
 			on: {
 				onItemDblClick: (id) => {
-					const values = this.getRoot().getItem(id);
-					this.phoneInfo.showWindow(values);
+					if (id.column !== "amount") {
+						const values = this.getRoot().getItem(id);
+						this.phoneInfo.showWindow(values);
+					}
 				}
 			}
 		};

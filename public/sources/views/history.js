@@ -24,7 +24,8 @@ export default class PhonesTable extends JetView {
 				},
 				{
 					id: "DeliveryAddress",
-					header: "Address"
+					header: "Address",
+					fillspace: true
 				},
 				{
 					id: "DeliveryType",
@@ -39,13 +40,14 @@ export default class PhonesTable extends JetView {
 				{
 					id: "OrderDate",
 					header: "Order date",
-					width: 150
+					width: 170,
+					format: webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")
 				},
 				{
 					id: "Status",
 					header: "Status",
 					css: "statusCell",
-					options: statuses
+					collection: statuses
 				}
 			],
 			onClick: {
@@ -69,6 +71,9 @@ export default class PhonesTable extends JetView {
 		orders.waitData.then(() => {
 			view.sync(orders);
 			this.declineReasons = this.ui(DeclineReasonsWindow);
+			const user = this.app.getService("user");
+			const userName = user.getUser().name;
+			orders.data.filter(item => item.ClientName === userName);
 		});
 	}
 }
